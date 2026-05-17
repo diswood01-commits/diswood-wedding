@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DisWood Admin · Matrimoni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,400;1,400&family=Italianno&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#111110;--bg2:#1a1917;--bg3:#232120;--fg:#f0ebe2;--fg2:#a09888;--fg3:#6b6560;--gold:#C9A961;--gold2:#E6D4A8;--sage:#7A8E68;--sage2:#9CAF88;--red:#c0392b;--green:#27ae60;--line:rgba(255,255,255,0.07);--line2:rgba(255,255,255,0.04);}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--fg);height:100vh;display:flex;flex-direction:column;overflow:hidden;font-size:13px;}
+.login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:999;flex-direction:column;gap:20px;}
+.login-logo{font-family:'Italianno',cursive;font-size:60px;color:var(--gold);}
+.login-sub{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--fg3);}
+.login-box{display:flex;flex-direction:column;gap:10px;width:260px;}
+.l-inp{padding:11px 14px;background:var(--bg2);border:1px solid var(--line);color:var(--fg);font-family:'Inter',sans-serif;font-size:13px;border-radius:3px;width:100%;}
+.l-inp:focus{outline:none;border-color:var(--gold);}
+.l-btn{padding:11px;background:var(--gold);border:none;color:#1a1714;font-family:'Inter',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;}
+.l-err{font-size:11px;color:var(--red);text-align:center;min-height:14px;}
+.premium-screen{position:fixed;inset:0;background:rgba(0,0,0,0.75);display:none;align-items:center;justify-content:center;z-index:998;backdrop-filter:blur(4px);}
+.premium-screen.on{display:flex;}
+.premium-box{background:var(--bg2);border:1px solid var(--gold);border-radius:6px;padding:32px;width:320px;text-align:center;}
+.premium-icon{font-size:36px;margin-bottom:12px;}
+.premium-title{font-family:'Cormorant Garamond',serif;font-size:24px;margin-bottom:6px;color:var(--gold);}
+.premium-sub{font-size:12px;color:var(--fg2);margin-bottom:20px;line-height:1.5;}
+.premium-inp{width:100%;padding:11px 14px;background:var(--bg);border:1px solid var(--line);color:var(--fg);font-family:'Inter',sans-serif;font-size:14px;border-radius:3px;text-align:center;letter-spacing:3px;margin-bottom:10px;}
+.premium-inp:focus{outline:none;border-color:var(--gold);}
+.premium-btn{width:100%;padding:11px;background:var(--gold);border:none;color:#1a1714;font-family:'Inter',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;margin-bottom:8px;}
+.premium-cancel{background:none;border:none;color:var(--fg3);font-size:11px;cursor:pointer;font-family:'Inter',sans-serif;}
+.premium-err{font-size:11px;color:var(--red);margin-top:6px;min-height:14px;}
+.topbar{height:52px;background:var(--bg);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;}
+.tb-l{display:flex;align-items:center;gap:14px;}
+.tb-logo{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
+.tb-sep{width:1px;height:18px;background:var(--line);}
+.tb-couple{font-family:'Italianno',cursive;font-size:20px;color:var(--fg);opacity:.7;}
+.tb-pbadge{font-size:9px;padding:2px 8px;background:rgba(201,169,97,.15);color:var(--gold);border-radius:100px;border:1px solid rgba(201,169,97,.3);display:none;}
+.tb-r{display:flex;gap:8px;align-items:center;}
+.tb-btn{padding:6px 14px;border:none;font-family:'Inter',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .2s;}
+.btn-gold{background:var(--gold);color:#1a1714;}.btn-gold:hover{background:var(--gold2);}
+.btn-ghost{background:var(--bg3);color:var(--fg2);border:1px solid var(--line);}.btn-ghost:hover{color:var(--fg);}
+.btn-txt{background:transparent;color:var(--fg3);border:none;font-size:10px;cursor:pointer;}
+.main{display:flex;flex:1;overflow:hidden;}
+.sidebar{width:196px;flex-shrink:0;background:var(--bg);border-right:1px solid var(--line);overflow-y:auto;display:flex;flex-direction:column;}
+.sidebar::-webkit-scrollbar{width:3px;}.sidebar::-webkit-scrollbar-thumb{background:var(--bg3);}
+.sb-sec{padding:6px;}
+.sb-lbl{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--fg3);padding:8px 8px 5px;font-weight:600;}
+.sb-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:3px;cursor:pointer;color:var(--fg2);font-size:12px;border:none;background:none;width:100%;text-align:left;transition:all .2s;}
+.sb-item:hover{background:var(--bg3);color:var(--fg);}
+.sb-item.on{background:rgba(201,169,97,.1);color:var(--gold);}
+.sb-icon{font-size:13px;width:16px;text-align:center;flex-shrink:0;}
+.sb-badge{margin-left:auto;font-size:9px;color:var(--gold);opacity:.7;}
+.content{flex:1;overflow-y:auto;background:var(--bg2);}
+.content::-webkit-scrollbar{width:4px;}.content::-webkit-scrollbar-thumb{background:var(--bg3);}
+.panel{display:none;padding:24px 28px;}.panel.on{display:block;}
+.p-title{font-size:17px;font-weight:500;margin-bottom:3px;display:flex;align-items:center;gap:10px;}
+.p-sub{font-size:12px;color:var(--fg2);margin-bottom:22px;}
+.ptag{font-size:9px;padding:2px 8px;background:rgba(201,169,97,.15);color:var(--gold);border-radius:100px;border:1px solid rgba(201,169,97,.2);}
+.btag{font-size:9px;padding:2px 8px;background:rgba(122,142,104,.15);color:var(--sage2);border-radius:100px;border:1px solid rgba(122,142,104,.2);}
+.f-row{margin-bottom:16px;}
+.f-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
+.f-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;}
+label{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--fg2);margin-bottom:6px;font-weight:500;}
+input[type=text],input[type=url],input[type=tel],input[type=password],input[type=number],textarea{width:100%;padding:9px 11px;background:var(--bg);border:1px solid var(--line);color:var(--fg);font-family:'Inter',sans-serif;font-size:13px;border-radius:2px;transition:border-color .2s;}
+input:focus,textarea:focus{outline:none;border-color:var(--gold);}
+textarea{resize:vertical;min-height:70px;line-height:1.5;}
+.hint{font-size:11px;color:var(--fg3);margin-top:4px;}
+.toast{position:fixed;bottom:20px;right:20px;padding:11px 20px;background:var(--sage);color:#fff;border-radius:3px;font-size:12px;font-weight:500;transform:translateY(70px);opacity:0;transition:all .3s;z-index:999;}
+.toast.on{transform:translateY(0);opacity:1;}
+.lbar{height:2px;background:linear-gradient(90deg,var(--gold),var(--sage));width:0;transition:width .3s;position:fixed;top:0;left:0;z-index:999;}
+</style>
+</head>
+<body>
+
+<div class="login-screen" id="login-screen">
+  <div class="login-logo">DisWood</div>
+  <div class="login-sub">Pannello Matrimoni</div>
+  <div class="login-box">
+    <input type="password" class="l-inp" id="pwd" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="l-btn" onclick="doLogin()">Accedi</button>
+    <div class="l-err" id="l-err"></div>
+  </div>
+</div>
+
+<div class="lbar" id="lbar"></div>
+
+<div class="topbar">
+  <div class="tb-l">
+    <div class="tb-logo">DisWood Admin</div>
+    <div class="tb-sep"></div>
+    <div class="tb-couple" id="tb-couple">Marco &amp; Chiara</div>
+  </div>
+  <div class="tb-r">
+    <button class="tb-btn btn-ghost" onclick="window.open('landing.html','_blank')">↗ Landing</button>
+    <button class="tb-btn btn-gold" onclick="saveAll()" id="btn-save">Salva tutto</button>
+    <button class="btn-txt" onclick="logout()">Esci</button>
+  </div>
+</div>
+
+<div class="main">
+<div class="sidebar">
+  <div class="sb-sec">
+    <div class="sb-lbl">Principale</div>
+    <button class="sb-item on" onclick="show('dashboard',this)"><span class="sb-icon">📊</span>Dashboard RSVP</button>
+    <button class="sb-item" onclick="show('dati',this)"><span class="sb-icon">💍</span>Dati matrimonio</button>
+  </div>
+</div>
+
+<div class="content">
+
+<div class="panel on" id="panel-dashboard">
+  <div class="p-title">Dashboard RSVP <span class="btag">Base</span></div>
+  <div class="p-sub">In tempo reale dal Google Sheet</div>
+  <button class="tb-btn btn-ghost" onclick="loadRSVP()" style="margin-bottom:12px;">🔄 Aggiorna</button>
+  <div id="rsvp-container">Caricamento...</div>
+</div>
+
+<div class="panel" id="panel-dati">
+  <div class="p-title">Dati matrimonio</div>
+  <div class="p-sub">Informazioni base</div>
+  <div class="f-row-2">
+    <div><label>Sposo</label><input type="text" id="t-sposo" placeholder="Marco"></div>
+    <div><label>Sposa</label><input type="text" id="t-sposa" placeholder="Chiara"></div>
+  </div>
+  <div class="f-row-2">
+    <div><label>Data visualizzata</label><input type="text" id="t-data_display" placeholder="12 · 07 · 2026"></div>
+    <div><label>Data ISO (countdown)</label><input type="text" id="t-data_iso" placeholder="2026-07-12T15:30:00"></div>
+  </div>
+  <button class="tb-btn btn-gold" onclick="saveDati()">Salva dati</button>
+</div>
+
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API='https://script.google.com/macros/s/AKfycbwf4Q4IKXZPjeAtLIfmAcru6XOsE-C4DFJ1lOck3lU1LxevEMyY8cIdUnUyGaPtrXe9/exec';
+const PASSWORD='diswood2026';
+
+function doLogin(){
+  if(document.getElementById('pwd').value===PASSWORD){
+    document.getElementById('login-screen').style.display='none';
+    initAdmin();
+  }else{
+    const e=document.getElementById('l-err');
+    e.textContent='Password errata';
+    setTimeout(()=>e.textContent='',2000);
+  }
+}
+
+function logout(){
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('pwd').value='';
+}
+
+async function initAdmin(){
+  showBar(true);
+  try{
+    const r=await apiFetch('testi');
+    if(r.testi){
+      document.getElementById('t-sposo').value=r.testi['sposo']||'Marco';
+      document.getElementById('t-sposa').value=r.testi['sposa']||'Chiara';
+      document.getElementById('t-data_display').value=r.testi['data_display']||'12 · 07 · 2026';
+      document.getElementById('t-data_iso').value=r.testi['data_iso']||'2026-07-12T15:30:00';
+    }
+  }catch(e){
+    console.error('Errore init:',e);
+  }
+  showBar(false);
+  loadRSVP();
+}
+
+async function loadRSVP(){
+  try{
+    const r=await apiFetch('rsvp_list');
+    const list=r.rsvp||[];
+    const s=r.summary||{};
+    
+    let html='<table style="width:100%;border-collapse:collapse;margin-bottom:14px;"><thead><tr style="border-bottom:1px solid var(--line);"><th style="text-align:left;padding:8px;color:var(--fg3);font-size:9px;">Nome</th><th style="text-align:left;padding:8px;color:var(--fg3);font-size:9px;">Risposta</th><th style="text-align:left;padding:8px;color:var(--fg3);font-size:9px;">Persone</th><th style="text-align:left;padding:8px;color:var(--fg3);font-size:9px;">Tel</th></tr></thead><tbody>';
+    
+    if(list.length===0){
+      html+='<tr><td colspan="4" style="text-align:center;color:var(--fg3);padding:20px;">Nessuna risposta ancora</td></tr>';
+    }else{
+      list.forEach(r=>{
+        html+=`<tr style="border-bottom:1px solid var(--line2);"><td style="padding:9px;">${r['Nome']||'—'}</td><td style="padding:9px;"><span style="padding:2px 7px;background:${r['Presenza']==='si'?'rgba(39,174,96,.12)':'rgba(192,57,43,.12)'};color:${r['Presenza']==='si'?'var(--green)':'var(--red)'};border-radius:100px;font-size:10px;">${r['Presenza']==='si'?'✓ Sì':'✗ No'}</span></td><td style="padding:9px;">${(r['Adulti']||0)+(r['Bambini']||0)}</td><td style="padding:9px;color:var(--fg2);">${r['Telefono']||'—'}</td></tr>`;
+      });
+    }
+    html+='</tbody></table>';
+    html+=`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;">
+      <div style="background:var(--bg);border:1px solid var(--line);border-radius:3px;padding:12px;"><div style="font-size:24px;font-weight:bold;color:var(--gold);">${list.length}</div><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--fg2);margin-top:3px;">Risposte</div></div>
+      <div style="background:var(--bg);border:1px solid var(--line);border-radius:3px;padding:12px;"><div style="font-size:24px;font-weight:bold;color:var(--green);">${s.presenti||0}</div><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--fg2);margin-top:3px;">Presenti</div></div>
+      <div style="background:var(--bg);border:1px solid var(--line);border-radius:3px;padding:12px;"><div style="font-size:24px;font-weight:bold;color:var(--red);">${s.assenti||0}</div><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--fg2);margin-top:3px;">Assenti</div></div>
+      <div style="background:var(--bg);border:1px solid var(--line);border-radius:3px;padding:12px;"><div style="font-size:24px;font-weight:bold;color:var(--gold);">${(s.adulti||0)+(s.bambini||0)}</div><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--fg2);margin-top:3px;">Persone tot</div></div>
+    </div>`;
+    
+    document.getElementById('rsvp-container').innerHTML=html;
+  }catch(e){
+    document.getElementById('rsvp-container').innerHTML='<div style="color:var(--fg3);">API non configurata</div>';
+  }
+}
+
+async function saveDati(){
+  const testi={
+    sposo:document.getElementById('t-sposo').value||'Marco',
+    sposa:document.getElementById('t-sposa').value||'Chiara',
+    data_display:document.getElementById('t-data_display').value||'12 · 07 · 2026',
+    data_iso:document.getElementById('t-data_iso').value||'2026-07-12T15:30:00'
+  };
+  
+  try{
+    await apiPost({action:'testi_set',testi});
+    toast('✓ Dati salvati!');
+  }catch(e){
+    toast('Errore salvataggio','err');
+  }
+}
+
+async function saveAll(){
+  document.getElementById('btn-save').textContent='Salvataggio…';
+  document.getElementById('btn-save').disabled=true;
+  await saveDati();
+  document.getElementById('btn-save').textContent='Salva tutto';
+  document.getElementById('btn-save').disabled=false;
+}
+
+function show(id,btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.sb-item').forEach(b=>b.classList.remove('on'));
+  document.getElementById('panel-'+id).classList.add('on');
+  btn.classList.add('on');
+  if(id==='dashboard')loadRSVP();
+}
+
+function toast(msg,type){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.background=type==='err'?'var(--red)':'var(--sage)';
+  t.classList.add('on');
+  setTimeout(()=>t.classList.remove('on'),3000);
+}
+
+function showBar(on){
+  const b=document.getElementById('lbar');
+  b.style.width=on?'65%':'100%';
+  if(!on)setTimeout(()=>b.style.width='0',400);
+}
+
+async function apiFetch(action){
+  return(await fetch(API+'?action='+action)).json();
+}
+
+async function apiPost(data){
+  return(await fetch(API,{method:'POST',body:JSON.stringify(data)})).json();
+}
+
+document.getElementById('pwd').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+</script>
+</body>
+</html>
