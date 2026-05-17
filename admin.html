@@ -16,25 +16,13 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--fg);height:
 .login-box{display:flex;flex-direction:column;gap:10px;width:260px;}
 .l-inp{padding:11px 14px;background:var(--bg2);border:1px solid var(--line);color:var(--fg);font-family:'Inter',sans-serif;font-size:13px;border-radius:3px;width:100%;}
 .l-inp:focus{outline:none;border-color:var(--gold);}
-.l-btn{padding:11px;background:var(--gold);border:none;color:#1a1714;font-family:'Inter',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;}
+.l-btn{padding:11px;background:var(--gold);border:none;color:#1a1714;font-family:'Inter',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;}
 .l-err{font-size:11px;color:var(--red);text-align:center;min-height:14px;}
-.premium-screen{position:fixed;inset:0;background:rgba(0,0,0,0.75);display:none;align-items:center;justify-content:center;z-index:998;backdrop-filter:blur(4px);}
-.premium-screen.on{display:flex;}
-.premium-box{background:var(--bg2);border:1px solid var(--gold);border-radius:6px;padding:32px;width:320px;text-align:center;}
-.premium-icon{font-size:36px;margin-bottom:12px;}
-.premium-title{font-family:'Cormorant Garamond',serif;font-size:24px;margin-bottom:6px;color:var(--gold);}
-.premium-sub{font-size:12px;color:var(--fg2);margin-bottom:20px;line-height:1.5;}
-.premium-inp{width:100%;padding:11px 14px;background:var(--bg);border:1px solid var(--line);color:var(--fg);font-family:'Inter',sans-serif;font-size:14px;border-radius:3px;text-align:center;letter-spacing:3px;margin-bottom:10px;}
-.premium-inp:focus{outline:none;border-color:var(--gold);}
-.premium-btn{width:100%;padding:11px;background:var(--gold);border:none;color:#1a1714;font-family:'Inter',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:3px;margin-bottom:8px;}
-.premium-cancel{background:none;border:none;color:var(--fg3);font-size:11px;cursor:pointer;font-family:'Inter',sans-serif;}
-.premium-err{font-size:11px;color:var(--red);margin-top:6px;min-height:14px;}
 .topbar{height:52px;background:var(--bg);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;}
 .tb-l{display:flex;align-items:center;gap:14px;}
 .tb-logo{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);}
 .tb-sep{width:1px;height:18px;background:var(--line);}
 .tb-couple{font-family:'Italianno',cursive;font-size:20px;color:var(--fg);opacity:.7;}
-.tb-pbadge{font-size:9px;padding:2px 8px;background:rgba(201,169,97,.15);color:var(--gold);border-radius:100px;border:1px solid rgba(201,169,97,.3);display:none;}
 .tb-r{display:flex;gap:8px;align-items:center;}
 .tb-btn{padding:6px 14px;border:none;font-family:'Inter',sans-serif;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .2s;}
 .btn-gold{background:var(--gold);color:#1a1714;}.btn-gold:hover{background:var(--gold2);}
@@ -59,15 +47,28 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--fg);height:
 .btag{font-size:9px;padding:2px 8px;background:rgba(122,142,104,.15);color:var(--sage2);border-radius:100px;border:1px solid rgba(122,142,104,.2);}
 .f-row{margin-bottom:16px;}
 .f-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
-.f-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;}
 label{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--fg2);margin-bottom:6px;font-weight:500;}
-input[type=text],input[type=url],input[type=tel],input[type=password],input[type=number],textarea{width:100%;padding:9px 11px;background:var(--bg);border:1px solid var(--line);color:var(--fg);font-family:'Inter',sans-serif;font-size:13px;border-radius:2px;transition:border-color .2s;}
-input:focus,textarea:focus{outline:none;border-color:var(--gold);}
+input[type=text],input[type=url],input[type=tel],input[type=password],input[type=number],textarea,select{width:100%;padding:9px 11px;background:var(--bg);border:1px solid var(--line);color:var(--fg);font-family:'Inter',sans-serif;font-size:13px;border-radius:2px;transition:border-color .2s;}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--gold);}
 textarea{resize:vertical;min-height:70px;line-height:1.5;}
 .hint{font-size:11px;color:var(--fg3);margin-top:4px;}
+.toggle-switch{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.switch{width:44px;height:24px;background:var(--bg);border:1px solid var(--line);border-radius:12px;cursor:pointer;position:relative;transition:background .2s;}
+.switch.on{background:var(--sage);}
+.switch-knob{width:20px;height:20px;background:var(--fg);border-radius:10px;position:absolute;top:2px;left:2px;transition:left .2s;}
+.switch.on .switch-knob{left:22px;background:white;}
 .toast{position:fixed;bottom:20px;right:20px;padding:11px 20px;background:var(--sage);color:#fff;border-radius:3px;font-size:12px;font-weight:500;transform:translateY(70px);opacity:0;transition:all .3s;z-index:999;}
 .toast.on{transform:translateY(0);opacity:1;}
 .lbar{height:2px;background:linear-gradient(90deg,var(--gold),var(--sage));width:0;transition:width .3s;position:fixed;top:0;left:0;z-index:999;}
+.field-group{border:1px solid var(--line);border-radius:3px;padding:12px;margin-bottom:12px;}
+.field-group-title{font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.add-btn{padding:6px 12px;background:var(--bg);border:1px solid var(--line);color:var(--fg2);font-size:10px;cursor:pointer;border-radius:2px;transition:all .2s;}
+.add-btn:hover{color:var(--gold);border-color:var(--gold);}
+.item-row{display:flex;gap:10px;margin-bottom:10px;align-items:flex-start;}
+.item-row input{flex:1;}
+.remove-btn{padding:6px 10px;background:var(--red);color:white;border:none;border-radius:2px;font-size:10px;cursor:pointer;}
+.premium-lock{position:relative;}
+.premium-lock::after{content:'🔒';position:absolute;top:50%;right:10px;transform:translateY(-50%);font-size:12px;}
 </style>
 </head>
 <body>
@@ -75,7 +76,7 @@ textarea{resize:vertical;min-height:70px;line-height:1.5;}
 <div class="login-screen" id="login-screen">
   <div class="login-logo">DisWood</div>
   <div class="login-sub">Pannello Matrimoni</div>
-  <div class="login-box">
+  <div style="display:flex;flex-direction:column;gap:10px;width:260px;">
     <input type="password" class="l-inp" id="pwd" placeholder="Password" onkeydown="if(event.key==='Enter')doLogin()">
     <button class="l-btn" onclick="doLogin()">Accedi</button>
     <div class="l-err" id="l-err"></div>
@@ -104,19 +105,40 @@ textarea{resize:vertical;min-height:70px;line-height:1.5;}
     <button class="sb-item on" onclick="show('dashboard',this)"><span class="sb-icon">📊</span>Dashboard RSVP</button>
     <button class="sb-item" onclick="show('dati',this)"><span class="sb-icon">💍</span>Dati matrimonio</button>
   </div>
+
+  <div class="sb-sec">
+    <div class="sb-lbl">Blocchi Base</div>
+    <button class="sb-item" onclick="show('benvenuto',this)"><span class="sb-icon">👋</span>Benvenuto</button>
+    <button class="sb-item" onclick="show('programma',this)"><span class="sb-icon">📅</span>Programma</button>
+    <button class="sb-item" onclick="show('mappe',this)"><span class="sb-icon">🗺️</span>Mappe</button>
+    <button class="sb-item" onclick="show('hotel',this)"><span class="sb-icon">🏨</span>Hotel</button>
+    <button class="sb-item" onclick="show('dresscode',this)"><span class="sb-icon">👔</span>Dress code</button>
+  </div>
+
+  <div class="sb-sec">
+    <div class="sb-lbl">Premium ⭐</div>
+    <button class="sb-item" onclick="show('protagonisti',this)"><span class="sb-icon">👥</span>Protagonisti</button>
+    <button class="sb-item" onclick="show('regali',this)"><span class="sb-icon">🎁</span>Regali + IBAN</button>
+    <button class="sb-item" onclick="show('navetta',this)"><span class="sb-icon">🚕</span>Navetta</button>
+    <button class="sb-item" onclick="show('menu',this)"><span class="sb-icon">🍽️</span>Menù</button>
+    <button class="sb-item" onclick="show('guestbook',this)"><span class="sb-icon">📝</span>Guestbook</button>
+    <button class="sb-item" onclick="show('foto',this)"><span class="sb-icon">📸</span>Foto Drive</button>
+  </div>
 </div>
 
 <div class="content">
 
+<!-- DASHBOARD RSVP -->
 <div class="panel on" id="panel-dashboard">
-  <div class="p-title">Dashboard RSVP <span class="btag">Base</span></div>
+  <div class="p-title">📊 Dashboard RSVP <span class="btag">Base</span></div>
   <div class="p-sub">In tempo reale dal Google Sheet</div>
   <button class="tb-btn btn-ghost" onclick="loadRSVP()" style="margin-bottom:12px;">🔄 Aggiorna</button>
   <div id="rsvp-container">Caricamento...</div>
 </div>
 
+<!-- DATI MATRIMONIO -->
 <div class="panel" id="panel-dati">
-  <div class="p-title">Dati matrimonio</div>
+  <div class="p-title">💍 Dati matrimonio</div>
   <div class="p-sub">Informazioni base</div>
   <div class="f-row-2">
     <div><label>Sposo</label><input type="text" id="t-sposo" placeholder="Marco"></div>
@@ -129,6 +151,156 @@ textarea{resize:vertical;min-height:70px;line-height:1.5;}
   <button class="tb-btn btn-gold" onclick="saveDati()">Salva dati</button>
 </div>
 
+<!-- BENVENUTO -->
+<div class="panel" id="panel-benvenuto">
+  <div class="p-title">👋 Benvenuto <span class="ptag">Base</span></div>
+  <div class="p-sub">Titolo e sottotitolo</div>
+  <div class="f-row">
+    <label>Titolo</label>
+    <input type="text" id="t-benvenuto_title" placeholder="Siamo felici di condividere...">
+  </div>
+  <div class="f-row">
+    <label>Sottotitolo</label>
+    <textarea id="t-benvenuto_sub" placeholder="Una frase bella sul matrimonio"></textarea>
+  </div>
+  <div class="f-row">
+    <label>URL foto (o upload)</label>
+    <input type="text" id="t-benvenuto_foto" placeholder="https://...">
+  </div>
+  <button class="tb-btn btn-gold" onclick="savePanel('benvenuto')">Salva Benvenuto</button>
+</div>
+
+<!-- PROGRAMMA -->
+<div class="panel" id="panel-programma">
+  <div class="p-title">📅 Programma <span class="ptag">Base</span></div>
+  <div class="p-sub">Orari e attività</div>
+  <div id="programma-items"></div>
+  <button class="add-btn" onclick="addProgrammaItem()">+ Aggiungi orario</button>
+  <button class="tb-btn btn-gold" onclick="savePanel('programma')" style="margin-top:12px;">Salva Programma</button>
+</div>
+
+<!-- MAPPE -->
+<div class="panel" id="panel-mappe">
+  <div class="p-title">🗺️ Mappe <span class="ptag">Base</span></div>
+  <div class="p-sub">Luogo cerimonia e ricevimento</div>
+  <div class="f-row">
+    <label>Nome luogo</label>
+    <input type="text" id="t-mappe_nome" placeholder="Castello di Aymavilles">
+  </div>
+  <div class="f-row">
+    <label>Indirizzo</label>
+    <input type="text" id="t-mappe_indirizzo" placeholder="Via...">
+  </div>
+  <div class="f-row">
+    <label>Embed Google Maps (iframe code)</label>
+    <textarea id="t-mappe_embed" placeholder="<iframe src='...'></iframe>"></textarea>
+  </div>
+  <button class="tb-btn btn-gold" onclick="savePanel('mappe')">Salva Mappe</button>
+</div>
+
+<!-- HOTEL -->
+<div class="panel" id="panel-hotel">
+  <div class="p-title">🏨 Hotel <span class="ptag">Base</span></div>
+  <div class="p-sub">Consigli e prenotazioni</div>
+  <div id="hotel-items"></div>
+  <button class="add-btn" onclick="addHotelItem()">+ Aggiungi hotel</button>
+  <button class="tb-btn btn-gold" onclick="savePanel('hotel')" style="margin-top:12px;">Salva Hotel</button>
+</div>
+
+<!-- DRESS CODE -->
+<div class="panel" id="panel-dresscode">
+  <div class="p-title">👔 Dress code <span class="ptag">Base</span></div>
+  <div class="p-sub">Suggerimenti di stile</div>
+  <div class="f-row">
+    <label>Titolo</label>
+    <input type="text" id="t-dresscode_title" placeholder="Abito elegante">
+  </div>
+  <div class="f-row">
+    <label>Descrizione</label>
+    <textarea id="t-dresscode_desc" placeholder="Dettagli sul dress code..."></textarea>
+  </div>
+  <button class="tb-btn btn-gold" onclick="savePanel('dresscode')">Salva Dress Code</button>
+</div>
+
+<!-- PROTAGONISTI (PREMIUM) -->
+<div class="panel" id="panel-protagonisti">
+  <div class="p-title">👥 Protagonisti <span class="ptag">Premium ⭐</span></div>
+  <div class="p-sub">Sposo, sposa, testimoni, genitori</div>
+  <div id="protagonisti-items"></div>
+  <button class="add-btn" onclick="addProtagonistiItem()">+ Aggiungi persona</button>
+  <button class="tb-btn btn-gold" onclick="savePanel('protagonisti')" style="margin-top:12px;">Salva Protagonisti</button>
+</div>
+
+<!-- REGALI (PREMIUM) -->
+<div class="panel" id="panel-regali">
+  <div class="p-title">🎁 Regali + IBAN <span class="ptag">Premium ⭐</span></div>
+  <div class="p-sub">Info su regali e bonificazione</div>
+  <div class="f-row">
+    <label>Titolo sezione</label>
+    <input type="text" id="t-regali_title" placeholder="Desideri matrimoniali">
+  </div>
+  <div class="f-row">
+    <label>IBAN (beneficiario)</label>
+    <input type="text" id="t-regali_iban" placeholder="IT60 X054 2811...">
+  </div>
+  <div class="f-row">
+    <label>Causale suggerita</label>
+    <input type="text" id="t-regali_causale" placeholder="Marco & Chiara">
+  </div>
+  <button class="tb-btn btn-gold" onclick="savePanel('regali')">Salva Regali</button>
+</div>
+
+<!-- NAVETTA (PREMIUM) -->
+<div class="panel" id="panel-navetta">
+  <div class="p-title">🚕 Navetta <span class="ptag">Premium ⭐</span></div>
+  <div class="p-sub">Orari e punti pickup</div>
+  <div class="f-row">
+    <label>Descrizione navetta</label>
+    <textarea id="t-navetta_desc" placeholder="Info su orari e modalità..."></textarea>
+  </div>
+  <div id="navetta-items"></div>
+  <button class="add-btn" onclick="addNavettaItem()">+ Aggiungi punto pickup</button>
+  <button class="tb-btn btn-gold" onclick="savePanel('navetta')" style="margin-top:12px;">Salva Navetta</button>
+</div>
+
+<!-- MENÙ (PREMIUM) -->
+<div class="panel" id="panel-menu">
+  <div class="p-title">🍽️ Menù <span class="ptag">Premium ⭐</span></div>
+  <div class="p-sub">Piatti e bevande</div>
+  <div id="menu-items"></div>
+  <button class="add-btn" onclick="addMenulItem()">+ Aggiungi portata</button>
+  <button class="tb-btn btn-gold" onclick="savePanel('menu')" style="margin-top:12px;">Salva Menù</button>
+</div>
+
+<!-- GUESTBOOK (PREMIUM) -->
+<div class="panel" id="panel-guestbook">
+  <div class="p-title">📝 Guestbook <span class="ptag">Premium ⭐</span></div>
+  <div class="p-sub">Dediche e messaggi dei guest</div>
+  <div class="f-row">
+    <label>Titolo</label>
+    <input type="text" id="t-guestbook_title" placeholder="Lascia una dedica">
+  </div>
+  <div id="guestbook-items"></div>
+  <button class="tb-btn btn-gold" onclick="loadGuestbook()">🔄 Ricarica Guestbook</button>
+</div>
+
+<!-- FOTO DRIVE (PREMIUM) -->
+<div class="panel" id="panel-foto">
+  <div class="p-title">📸 Foto Drive <span class="ptag">Premium ⭐</span></div>
+  <div class="p-sub">Organizza cartelle foto</div>
+  <div class="f-row">
+    <label>Cartelle visibili</label>
+    <div style="font-size:11px;color:var(--fg2);margin-top:6px;">
+      ✓ Foto Ufficiali<br>
+      ✓ Foto Location<br>
+      ✓ Foto Parenti<br>
+      ✓ Foto Amici<br>
+      ✓ Video
+    </div>
+  </div>
+  <button class="tb-btn btn-gold" onclick="alert('Sincronizzazione Drive in corso...')">🔄 Sincronizza Drive</button>
+</div>
+
 </div>
 </div>
 
@@ -137,6 +309,8 @@ textarea{resize:vertical;min-height:70px;line-height:1.5;}
 <script>
 const API='https://script.google.com/macros/s/AKfycbwf4Q4IKXZPjeAtLIfmAcru6XOsE-C4DFJ1lOck3lU1LxevEMyY8cIdUnUyGaPtrXe9/exec';
 const PASSWORD='diswood2026';
+
+let adminData={};
 
 function doLogin(){
   if(document.getElementById('pwd').value===PASSWORD){
@@ -159,16 +333,45 @@ async function initAdmin(){
   try{
     const r=await apiFetch('testi');
     if(r.testi){
-      document.getElementById('t-sposo').value=r.testi['sposo']||'Marco';
-      document.getElementById('t-sposa').value=r.testi['sposa']||'Chiara';
-      document.getElementById('t-data_display').value=r.testi['data_display']||'12 · 07 · 2026';
-      document.getElementById('t-data_iso').value=r.testi['data_iso']||'2026-07-12T15:30:00';
+      adminData=r.testi;
+      loadFormFields();
     }
   }catch(e){
     console.error('Errore init:',e);
   }
   showBar(false);
   loadRSVP();
+}
+
+function loadFormFields(){
+  document.getElementById('t-sposo').value=adminData['sposo']||'Marco';
+  document.getElementById('t-sposa').value=adminData['sposa']||'Chiara';
+  document.getElementById('t-data_display').value=adminData['data_display']||'12 · 07 · 2026';
+  document.getElementById('t-data_iso').value=adminData['data_iso']||'2026-07-12T15:30:00';
+  
+  document.getElementById('t-benvenuto_title').value=adminData['benvenuto_title']||'';
+  document.getElementById('t-benvenuto_sub').value=adminData['benvenuto_sub']||'';
+  document.getElementById('t-benvenuto_foto').value=adminData['benvenuto_foto']||'';
+  
+  document.getElementById('t-mappe_nome').value=adminData['mappe_nome']||'Castello di Aymavilles';
+  document.getElementById('t-mappe_indirizzo').value=adminData['mappe_indirizzo']||'';
+  document.getElementById('t-mappe_embed').value=adminData['mappe_embed']||'';
+  
+  document.getElementById('t-dresscode_title').value=adminData['dresscode_title']||'Abito elegante';
+  document.getElementById('t-dresscode_desc').value=adminData['dresscode_desc']||'';
+  
+  document.getElementById('t-regali_title').value=adminData['regali_title']||'Desideri matrimoniali';
+  document.getElementById('t-regali_iban').value=adminData['regali_iban']||'IT60 X054 2811 1010 0000 0123 456';
+  document.getElementById('t-regali_causale').value=adminData['regali_causale']||'Marco & Chiara';
+  
+  document.getElementById('t-navetta_desc').value=adminData['navetta_desc']||'';
+  document.getElementById('t-guestbook_title').value=adminData['guestbook_title']||'Lascia una dedica';
+  
+  renderProgrammaItems();
+  renderHotelItems();
+  renderProtagonistiItems();
+  renderNavettaItems();
+  renderMenuItems();
 }
 
 async function loadRSVP(){
@@ -187,7 +390,7 @@ async function loadRSVP(){
       });
     }
     html+='</tbody></table>';
-    html+=`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;">
+    html+=`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
       <div style="background:var(--bg);border:1px solid var(--line);border-radius:3px;padding:12px;"><div style="font-size:24px;font-weight:bold;color:var(--gold);">${list.length}</div><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--fg2);margin-top:3px;">Risposte</div></div>
       <div style="background:var(--bg);border:1px solid var(--line);border-radius:3px;padding:12px;"><div style="font-size:24px;font-weight:bold;color:var(--green);">${s.presenti||0}</div><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--fg2);margin-top:3px;">Presenti</div></div>
       <div style="background:var(--bg);border:1px solid var(--line);border-radius:3px;padding:12px;"><div style="font-size:24px;font-weight:bold;color:var(--red);">${s.assenti||0}</div><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--fg2);margin-top:3px;">Assenti</div></div>
@@ -200,17 +403,216 @@ async function loadRSVP(){
   }
 }
 
+function renderProgrammaItems(){
+  const programma=adminData['programma']||[{ora:'10:00',evento:'Cerimonia'},{ora:'13:00',evento:'Ricevimento'}];
+  let html='';
+  programma.forEach((p,i)=>{
+    html+=`<div class="item-row"><input type="time" value="${p.ora}" id="prog-ora-${i}"><input type="text" value="${p.evento}" id="prog-evento-${i}" placeholder="Nome evento"><button class="remove-btn" onclick="removeProgrammaItem(${i})">×</button></div>`;
+  });
+  document.getElementById('programma-items').innerHTML=html;
+}
+
+function addProgrammaItem(){
+  const programma=adminData['programma']||[];
+  programma.push({ora:'',evento:''});
+  adminData['programma']=programma;
+  renderProgrammaItems();
+}
+
+function removeProgrammaItem(i){
+  const programma=adminData['programma']||[];
+  programma.splice(i,1);
+  adminData['programma']=programma;
+  renderProgrammaItems();
+}
+
+function renderHotelItems(){
+  const hotel=adminData['hotel']||[{nome:'Hotel 1',indirizzo:'Via...',tel:''}];
+  let html='';
+  hotel.forEach((h,i)=>{
+    html+=`<div class="item-row"><input type="text" value="${h.nome}" id="hotel-nome-${i}" placeholder="Nome hotel"><input type="text" value="${h.tel}" id="hotel-tel-${i}" placeholder="Tel"><button class="remove-btn" onclick="removeHotelItem(${i})">×</button></div>`;
+  });
+  document.getElementById('hotel-items').innerHTML=html;
+}
+
+function addHotelItem(){
+  const hotel=adminData['hotel']||[];
+  hotel.push({nome:'',tel:''});
+  adminData['hotel']=hotel;
+  renderHotelItems();
+}
+
+function removeHotelItem(i){
+  const hotel=adminData['hotel']||[];
+  hotel.splice(i,1);
+  adminData['hotel']=hotel;
+  renderHotelItems();
+}
+
+function renderProtagonistiItems(){
+  const protagonisti=adminData['protagonisti']||[{ruolo:'Sposo',nome:'Marco'},{ruolo:'Sposa',nome:'Chiara'}];
+  let html='';
+  protagonisti.forEach((p,i)=>{
+    html+=`<div class="item-row"><input type="text" value="${p.ruolo}" id="prot-ruolo-${i}" placeholder="Ruolo"><input type="text" value="${p.nome}" id="prot-nome-${i}" placeholder="Nome"><button class="remove-btn" onclick="removeProtagonistiItem(${i})">×</button></div>`;
+  });
+  document.getElementById('protagonisti-items').innerHTML=html;
+}
+
+function addProtagonistiItem(){
+  const protagonisti=adminData['protagonisti']||[];
+  protagonisti.push({ruolo:'',nome:''});
+  adminData['protagonisti']=protagonisti;
+  renderProtagonistiItems();
+}
+
+function removeProtagonistiItem(i){
+  const protagonisti=adminData['protagonisti']||[];
+  protagonisti.splice(i,1);
+  adminData['protagonisti']=protagonisti;
+  renderProtagonistiItems();
+}
+
+function renderNavettaItems(){
+  const navetta=adminData['navetta_punti']||[{punto:'Centro città',ora:'15:00'}];
+  let html='';
+  navetta.forEach((n,i)=>{
+    html+=`<div class="item-row"><input type="text" value="${n.punto}" id="nav-punto-${i}" placeholder="Luogo pickup"><input type="time" value="${n.ora}" id="nav-ora-${i}"><button class="remove-btn" onclick="removeNavettaItem(${i})">×</button></div>`;
+  });
+  document.getElementById('navetta-items').innerHTML=html;
+}
+
+function addNavettaItem(){
+  const navetta=adminData['navetta_punti']||[];
+  navetta.push({punto:'',ora:''});
+  adminData['navetta_punti']=navetta;
+  renderNavettaItems();
+}
+
+function removeNavettaItem(i){
+  const navetta=adminData['navetta_punti']||[];
+  navetta.splice(i,1);
+  adminData['navetta_punti']=navetta;
+  renderNavettaItems();
+}
+
+function renderMenuItems(){
+  const menu=adminData['menu']||[{portata:'Antipasto',descrizione:'Selezione valdostana'}];
+  let html='';
+  menu.forEach((m,i)=>{
+    html+=`<div class="item-row"><input type="text" value="${m.portata}" id="menu-portata-${i}" placeholder="Portata"><input type="text" value="${m.descrizione}" id="menu-desc-${i}" placeholder="Descrizione"><button class="remove-btn" onclick="removeMenulItem(${i})">×</button></div>`;
+  });
+  document.getElementById('menu-items').innerHTML=html;
+}
+
+function addMenulItem(){
+  const menu=adminData['menu']||[];
+  menu.push({portata:'',descrizione:''});
+  adminData['menu']=menu;
+  renderMenuItems();
+}
+
+function removeMenulItem(i){
+  const menu=adminData['menu']||[];
+  menu.splice(i,1);
+  adminData['menu']=menu;
+  renderMenuItems();
+}
+
+async function loadGuestbook(){
+  try{
+    const r=await apiFetch('guestbook_list');
+    const list=r.guestbook||[];
+    let html='<div style="max-height:300px;overflow-y:auto;border:1px solid var(--line);border-radius:3px;padding:12px;">';
+    if(list.length===0)html+='<p style="color:var(--fg3);font-size:11px;">Nessuna dedica ancora</p>';
+    else list.forEach(g=>{
+      html+=`<div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--line2);"><div style="font-weight:600;font-size:11px;">${g['Nome']}</div><div style="color:var(--fg2);font-size:11px;margin-top:3px;">${g['Dedica']}</div></div>`;
+    });
+    html+='</div>';
+    document.getElementById('guestbook-items').innerHTML=html;
+  }catch(e){console.error(e);}
+}
+
 async function saveDati(){
-  const testi={
-    sposo:document.getElementById('t-sposo').value||'Marco',
-    sposa:document.getElementById('t-sposa').value||'Chiara',
-    data_display:document.getElementById('t-data_display').value||'12 · 07 · 2026',
-    data_iso:document.getElementById('t-data_iso').value||'2026-07-12T15:30:00'
+  const data={
+    sposo:document.getElementById('t-sposo').value,
+    sposa:document.getElementById('t-sposa').value,
+    data_display:document.getElementById('t-data_display').value,
+    data_iso:document.getElementById('t-data_iso').value
   };
+  try{
+    await apiPost({action:'testi_set',testi:data});
+    toast('✓ Dati salvati!');
+  }catch(e){
+    toast('Errore salvataggio','err');
+  }
+}
+
+async function savePanel(panel){
+  const data={};
+  
+  if(panel==='benvenuto'){
+    data.benvenuto_title=document.getElementById('t-benvenuto_title').value;
+    data.benvenuto_sub=document.getElementById('t-benvenuto_sub').value;
+    data.benvenuto_foto=document.getElementById('t-benvenuto_foto').value;
+  }else if(panel==='programma'){
+    const items=[];
+    let i=0;
+    while(document.getElementById(`prog-ora-${i}`)){
+      items.push({ora:document.getElementById(`prog-ora-${i}`).value,evento:document.getElementById(`prog-evento-${i}`).value});
+      i++;
+    }
+    data.programma=items;
+  }else if(panel==='mappe'){
+    data.mappe_nome=document.getElementById('t-mappe_nome').value;
+    data.mappe_indirizzo=document.getElementById('t-mappe_indirizzo').value;
+    data.mappe_embed=document.getElementById('t-mappe_embed').value;
+  }else if(panel==='hotel'){
+    const items=[];
+    let i=0;
+    while(document.getElementById(`hotel-nome-${i}`)){
+      items.push({nome:document.getElementById(`hotel-nome-${i}`).value,tel:document.getElementById(`hotel-tel-${i}`).value});
+      i++;
+    }
+    data.hotel=items;
+  }else if(panel==='dresscode'){
+    data.dresscode_title=document.getElementById('t-dresscode_title').value;
+    data.dresscode_desc=document.getElementById('t-dresscode_desc').value;
+  }else if(panel==='protagonisti'){
+    const items=[];
+    let i=0;
+    while(document.getElementById(`prot-ruolo-${i}`)){
+      items.push({ruolo:document.getElementById(`prot-ruolo-${i}`).value,nome:document.getElementById(`prot-nome-${i}`).value});
+      i++;
+    }
+    data.protagonisti=items;
+  }else if(panel==='regali'){
+    data.regali_title=document.getElementById('t-regali_title').value;
+    data.regali_iban=document.getElementById('t-regali_iban').value;
+    data.regali_causale=document.getElementById('t-regali_causale').value;
+  }else if(panel==='navetta'){
+    data.navetta_desc=document.getElementById('t-navetta_desc').value;
+    const items=[];
+    let i=0;
+    while(document.getElementById(`nav-punto-${i}`)){
+      items.push({punto:document.getElementById(`nav-punto-${i}`).value,ora:document.getElementById(`nav-ora-${i}`).value});
+      i++;
+    }
+    data.navetta_punti=items;
+  }else if(panel==='menu'){
+    const items=[];
+    let i=0;
+    while(document.getElementById(`menu-portata-${i}`)){
+      items.push({portata:document.getElementById(`menu-portata-${i}`).value,descrizione:document.getElementById(`menu-desc-${i}`).value});
+      i++;
+    }
+    data.menu=items;
+  }else if(panel==='guestbook'){
+    data.guestbook_title=document.getElementById('t-guestbook_title').value;
+  }
   
   try{
-    await apiPost({action:'testi_set',testi});
-    toast('✓ Dati salvati!');
+    await apiPost({action:'testi_set',testi:data});
+    toast(`✓ ${panel} salvato!`);
   }catch(e){
     toast('Errore salvataggio','err');
   }
@@ -230,6 +632,7 @@ function show(id,btn){
   document.getElementById('panel-'+id).classList.add('on');
   btn.classList.add('on');
   if(id==='dashboard')loadRSVP();
+  if(id==='guestbook')loadGuestbook();
 }
 
 function toast(msg,type){
