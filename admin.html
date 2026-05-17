@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel · DisWood Matrimoni</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f5f5f5; }
+    
+    .topbar {
+      background: #2c3e50;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .topbar h1 { font-size: 1.3em; }
+    .topbar button { padding: 10px 20px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px; }
+    .topbar button:hover { background: #c0392b; }
+    
+    .container { display: flex; min-height: 100vh; }
+    
+    .sidebar {
+      width: 250px;
+      background: white;
+      padding: 20px;
+      border-right: 1px solid #ddd;
+      overflow-y: auto;
+    }
+    
+    .sidebar h3 { margin-bottom: 15px; color: #2c3e50; }
+    .sidebar ul { list-style: none; }
+    .sidebar li { margin: 8px 0; }
+    .sidebar a {
+      display: block;
+      padding: 10px;
+      color: #2c3e50;
+      text-decoration: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .sidebar a:hover,
+    .sidebar a.active {
+      background: #e74c3c;
+      color: white;
+    }
+    
+    .content {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+    
+    .section {
+      background: white;
+      padding: 25px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      display: none;
+    }
+    
+    .section.active { display: block; }
+    
+    .section h2 { color: #2c3e50; margin-bottom: 20px; border-bottom: 2px solid #e74c3c; padding-bottom: 10px; }
+    
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #2c3e50; }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-family: inherit;
+    }
+    
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    
+    button {
+      padding: 12px 25px;
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.3s;
+    }
+    
+    button:hover { background: #c0392b; }
+    button:disabled { background: #ccc; cursor: not-allowed; }
+    
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #27ae60;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 5px;
+      display: none;
+      z-index: 2000;
+    }
+    
+    .toast.show { display: block; }
+    .toast.error { background: #e74c3c; }
+    
+    .kpi { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px; }
+    .kpi-box {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    
+    .kpi-box .number { font-size: 2em; font-weight: bold; }
+    .kpi-box .label { font-size: 0.9em; opacity: 0.9; }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    
+    table th, table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    table th { background: #f5f5f5; font-weight: bold; }
+    table tr:hover { background: #fafafa; }
+    
+    .badge { display: inline-block; padding: 5px 10px; background: #e74c3c; color: white; border-radius: 3px; font-size: 0.85em; }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>🎨 DisWood Matrimoni · Admin</h1>
+  <div>
+    <button onclick="saveAll()">💾 Salva tutto</button>
+    <button onclick="openLanding()">🔗 Landing</button>
+    <button onclick="logout()">Esci</button>
+  </div>
+</div>
+
+<div class="container">
+  
+  <div class="sidebar">
+    <h3>Menu</h3>
+    <ul>
+      <li><a onclick="showSection('dashboard')" class="active">📊 Dashboard</a></li>
+      <li><a onclick="showSection('dati-base')">📝 Dati Base</a></li>
+      <li><a onclick="showSection('blocchi')">🎯 Blocchi</a></li>
+      <li><a onclick="showSection('rsvp')">✅ RSVP</a></li>
+      <li><a onclick="showSection('guestbook')">📖 Guestbook</a></li>
+    </ul>
+  </div>
+
+  <div class="content">
+    
+    <!-- DASHBOARD -->
+    <div id="dashboard" class="section active">
+      <h2>Dashboard RSVP</h2>
+      <div class="kpi">
+        <div class="kpi-box">
+          <div class="label">Risposte</div>
+          <div class="number" id="kpi-risposte">0</div>
+        </div>
+        <div class="kpi-box">
+          <div class="label">Presenti</div>
+          <div class="number" id="kpi-presenti">0</div>
+        </div>
+        <div class="kpi-box">
+          <div class="label">Adulti</div>
+          <div class="number" id="kpi-adulti">0</div>
+        </div>
+        <div class="kpi-box">
+          <div class="label">Bambini</div>
+          <div class="number" id="kpi-bambini">0</div>
+        </div>
+      </div>
+      <button onclick="loadRSVPList()">🔄 Aggiorna</button>
+      <table id="rsvp-table" style="margin-top: 20px;">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Presenza</th>
+            <th>Adulti</th>
+            <th>Bambini</th>
+            <th>Contatto</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- DATI BASE -->
+    <div id="dati-base" class="section">
+      <h2>Dati Base Matrimonio</h2>
+      <div class="form-group">
+        <label>Sposo</label>
+        <input type="text" id="sposo" placeholder="Marco" value="Marco">
+      </div>
+      <div class="form-group">
+        <label>Sposa</label>
+        <input type="text" id="sposa" placeholder="Chiara" value="Chiara">
+      </div>
+      <div class="form-group">
+        <label>Data (formato: 12 · 07 · 2026)</label>
+        <input type="text" id="data-display" placeholder="12 · 07 · 2026" value="12 · 07 · 2026">
+      </div>
+      <div class="form-group">
+        <label>Data ISO (per countdown)</label>
+        <input type="text" id="data-iso" placeholder="2026-07-12T15:30:00" value="2026-07-12T15:30:00">
+      </div>
+      <div class="form-group">
+        <label>Luogo (visualizzazione)</label>
+        <input type="text" id="location-display" placeholder="Castello di Aymavilles · Valle d'Aosta" value="Castello di Aymavilles · Valle d'Aosta">
+      </div>
+      <div class="form-group">
+        <label>Luogo cerimonia</label>
+        <input type="text" id="location-cerimonia" placeholder="Castello di Aymavilles" value="Castello di Aymavilles">
+      </div>
+      <button onclick="saveDatiBase()">Salva dati base</button>
+    </div>
+
+    <!-- BLOCCHI -->
+    <div id="blocchi" class="section">
+      <h2>Abilita/Disabilita Blocchi</h2>
+      <p style="margin-bottom: 20px; color: #666;">Scegli quali sezioni mostrare nella landing pubblica.</p>
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+        <div>
+          <h3>📌 Base (sempre attivi)</h3>
+          <div class="form-group">
+            <label><input type="checkbox" id="blocco_benvenuto" checked> Benvenuto</label>
+          </div>
+          <div class="form-group">
+            <label><input type="checkbox" id="blocco_countdown" checked> Countdown</label>
+          </div>
+          <div class="form-group">
+            <label><input type="checkbox" id="blocco_rsvp" checked> RSVP</label>
+          </div>
+          <div class="form-group">
+            <label><input type="checkbox" id="blocco_programma" checked> Programma</label>
+          </div>
+        </div>
+        
+        <div>
+          <h3>⭐ Premium</h3>
+          <div class="form-group">
+            <label><input type="checkbox" id="blocco_guestbook"> Guestbook</label>
+          </div>
+          <div class="form-group">
+            <label><input type="checkbox" id="blocco_regali"> Regali</label>
+          </div>
+          <div class="form-group">
+            <label><input type="checkbox" id="blocco_menu"> Menù</label>
+          </div>
+          <div class="form-group">
+            <label><input type="checkbox" id="blocco_tableau"> Tableau</label>
+          </div>
+        </div>
+      </div>
+      
+      <button onclick="saveBlocchi()" style="margin-top: 20px;">Salva configurazione blocchi</button>
+    </div>
+
+    <!-- RSVP -->
+    <div id="rsvp" class="section">
+      <h2>RSVP Ricevuti</h2>
+      <button onclick="loadRSVPList()">🔄 Aggiorna lista</button>
+      <table id="rsvp-detail-table" style="margin-top: 20px;">
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Nome</th>
+            <th>Presenza</th>
+            <th>Persone</th>
+            <th>Telefono</th>
+            <th>Allergie</th>
+            <th>Messaggio</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- GUESTBOOK -->
+    <div id="guestbook" class="section">
+      <h2>Guestbook</h2>
+      <button onclick="loadGuestbook()">🔄 Aggiorna</button>
+      <div id="guestbook-list" style="margin-top: 20px;"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // ============================================================
+  // CONFIGURAZIONE
+  // ============================================================
+  const API = 'https://script.google.com/macros/s/AKfycbwf4Q4IKXZPjeAtLIfmAcru6XOsE-C4DFJ1lOck3lU1LxevEMyY8cIdUnUyGaPtrXe9/exec';
+  const PASSWORD = 'diswood2026';
+  
+  // ============================================================
+  // INIT
+  // ============================================================
+  window.addEventListener('DOMContentLoaded', () => {
+    checkPassword();
+    loadDatiBase();
+    loadBlocchi();
+    loadRSVPList();
+  });
+  
+  function checkPassword() {
+    const pwd = localStorage.getItem('admin_pwd');
+    if (pwd !== PASSWORD) {
+      const input = prompt('Password admin:');
+      if (input === PASSWORD) {
+        localStorage.setItem('admin_pwd', PASSWORD);
+      } else {
+        alert('Password errata');
+        window.location.href = 'about:blank';
+      }
+    }
+  }
+  
+  // ============================================================
+  // NAVIGAZIONE
+  // ============================================================
+  function showSection(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    
+    document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    if (id === 'dashboard') loadRSVPList();
+    if (id === 'rsvp') loadRSVPList();
+    if (id === 'guestbook') loadGuestbook();
+  }
+  
+  // ============================================================
+  // DATI BASE
+  // ============================================================
+  async function loadDatiBase() {
+    try {
+      const response = await fetch(API + '?action=testi');
+      const result = await response.json();
+      
+      if (result.testi) {
+        document.getElementById('sposo').value = result.testi['sposo'] || 'Marco';
+        document.getElementById('sposa').value = result.testi['sposa'] || 'Chiara';
+        document.getElementById('data-display').value = result.testi['data_display'] || '12 · 07 · 2026';
+        document.getElementById('data-iso').value = result.testi['data_iso'] || '2026-07-12T15:30:00';
+        document.getElementById('location-display').value = result.testi['location_display'] || 'Castello di Aymavilles · Valle d\'Aosta';
+        document.getElementById('location-cerimonia').value = result.testi['location_cerimonia'] || 'Castello di Aymavilles';
+      }
+    } catch (err) {
+      console.error('Errore caricamento dati:', err);
+    }
+  }
+  
+  async function saveDatiBase() {
+    const testi = {
+      sposo: document.getElementById('sposo').value,
+      sposa: document.getElementById('sposa').value,
+      data_display: document.getElementById('data-display').value,
+      data_iso: document.getElementById('data-iso').value,
+      location_display: document.getElementById('location-display').value,
+      location_cerimonia: document.getElementById('location-cerimonia').value
+    };
+    
+    try {
+      const response = await fetch(API, {
+        method: 'POST',
+        body: JSON.stringify({ action: 'testi_set', testi })
+      });
+      
+      const result = await response.json();
+      showToast('✅ Dati salvati!', false);
+    } catch (err) {
+      showToast('❌ Errore salvataggio', true);
+    }
+  }
+  
+  // ============================================================
+  // BLOCCHI
+  // ============================================================
+  async function loadBlocchi() {
+    try {
+      const response = await fetch(API + '?action=config');
+      const result = await response.json();
+      
+      if (result.config) {
+        ['benvenuto', 'countdown', 'rsvp', 'programma', 'guestbook', 'regali', 'menu', 'tableau'].forEach(b => {
+          const checkbox = document.getElementById('blocco_' + b);
+          if (checkbox) checkbox.checked = result.config['blocco_' + b] === 'on';
+        });
+      }
+    } catch (err) {
+      console.error('Errore blocchi:', err);
+    }
+  }
+  
+  async function saveBlocchi() {
+    const blocchi = {};
+    ['benvenuto', 'countdown', 'rsvp', 'programma', 'guestbook', 'regali', 'menu', 'tableau'].forEach(b => {
+      const checkbox = document.getElementById('blocco_' + b);
+      blocchi['blocco_' + b] = checkbox.checked ? 'on' : 'off';
+    });
+    
+    try {
+      for (const [key, value] of Object.entries(blocchi)) {
+        await fetch(API, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'config_set', key, value })
+        });
+      }
+      showToast('✅ Blocchi salvati!', false);
+    } catch (err) {
+      showToast('❌ Errore salvataggio', true);
+    }
+  }
+  
+  // ============================================================
+  // RSVP
+  // ============================================================
+  async function loadRSVPList() {
+    try {
+      const response = await fetch(API + '?action=rsvp_list');
+      const result = await response.json();
+      
+      if (result.rsvp) {
+        document.getElementById('kpi-risposte').textContent = result.summary.totale;
+        document.getElementById('kpi-presenti').textContent = result.summary.presenti;
+        document.getElementById('kpi-adulti').textContent = result.summary.adulti;
+        document.getElementById('kpi-bambini').textContent = result.summary.bambini;
+        
+        const tbody = document.querySelector('#rsvp-table tbody');
+        tbody.innerHTML = result.rsvp.map(r => `
+          <tr>
+            <td>${r['Nome']}</td>
+            <td><span class="badge">${r['Presenza'] === 'si' ? '✅ Sì' : '❌ No'}</span></td>
+            <td>${r['Adulti']}</td>
+            <td>${r['Bambini']}</td>
+            <td><a href="https://wa.me/${r['Telefono']}">📱</a></td>
+          </tr>
+        `).join('');
+        
+        const detailBody = document.querySelector('#rsvp-detail-table tbody');
+        detailBody.innerHTML = result.rsvp.map(r => `
+          <tr>
+            <td><small>${r['Timestamp']}</small></td>
+            <td>${r['Nome']}</td>
+            <td>${r['Presenza']}</td>
+            <td>${r['Adulti']} + ${r['Bambini']}</td>
+            <td>${r['Telefono']}</td>
+            <td>${r['Allergie']}</td>
+            <td>${r['Messaggio']}</td>
+          </tr>
+        `).join('');
+      }
+    } catch (err) {
+      console.error('Errore RSVP:', err);
+    }
+  }
+  
+  // ============================================================
+  // GUESTBOOK
+  // ============================================================
+  async function loadGuestbook() {
+    try {
+      const response = await fetch(API + '?action=guestbook');
+      const result = await response.json();
+      
+      const container = document.getElementById('guestbook-list');
+      if (!result.dediche || result.dediche.length === 0) {
+        container.innerHTML = '<p style="color: #999;">Nessuna dedica ancora</p>';
+        return;
+      }
+      
+      container.innerHTML = result.dediche.map(d => `
+        <div style="padding: 15px; background: #f5f5f5; border-radius: 5px; margin-bottom: 10px;">
+          <strong>${d.nome}</strong>
+          <p style="margin-top: 10px; color: #666;">${d.dedica}</p>
+          <small style="color: #999;">${d.timestamp}</small>
+        </div>
+      `).join('');
+    } catch (err) {
+      console.error('Errore guestbook:', err);
+    }
+  }
+  
+  // ============================================================
+  // UTILS
+  // ============================================================
+  async function saveAll() {
+    await saveDatiBase();
+    await saveBlocchi();
+    showToast('✅ Tutto salvato!', false);
+  }
+  
+  function showToast(msg, isError) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.toggle('error', isError);
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+  
+  function openLanding() {
+    const url = window.location.href.replace('admin.html', 'landing.html');
+    window.open(url, '_blank');
+  }
+  
+  function logout() {
+    localStorage.removeItem('admin_pwd');
+    window.location.reload();
+  }
+</script>
+
+</body>
+</html>
