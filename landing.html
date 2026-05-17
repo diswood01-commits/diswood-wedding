@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marco & Chiara · 12 Luglio 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&family=Italianno&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-cream: #F7F3EC;
+    --color-paper: #FBF8F2;
+    --color-stone: #2C2A26;
+    --color-stone-soft: #5A554E;
+    --color-sage: #9CAF88;
+    --color-sage-deep: #7A8E68;
+    --color-gold: #C9A961;
+    --color-gold-soft: #E6D4A8;
+    --color-wood-line: rgba(155, 130, 90, 0.15);
+    --shadow-soft: 0 1px 30px rgba(44, 42, 38, 0.08);
+    --shadow-deep: 0 20px 60px rgba(44, 42, 38, 0.15);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    background: var(--color-cream);
+    color: var(--color-stone);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ============ NAVBAR ============ */
+  .navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 90;
+    padding: 16px 24px;
+    background: rgba(251, 248, 242, 0);
+    backdrop-filter: blur(0px);
+    transition: all 0.4s ease;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .navbar.scrolled {
+    background: rgba(251, 248, 242, 0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-wood-line);
+    padding: 12px 24px;
+  }
+  .nav-logo {
+    font-family: 'Italianno', cursive;
+    font-size: 32px;
+    color: var(--color-cream);
+    transition: color 0.4s ease;
+    line-height: 1;
+    cursor: pointer;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .navbar.scrolled .nav-logo { color: var(--color-stone); }
+  .nav-links { display: flex; gap: 4px; align-items: center; }
+  .nav-link {
+    background: none; border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-cream);
+    cursor: pointer;
+    padding: 8px 14px;
+    transition: all 0.3s ease;
+    font-weight: 400;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .navbar.scrolled .nav-link { color: var(--color-stone-soft); }
+  .nav-link:hover { color: var(--color-gold-soft); }
+  .navbar.scrolled .nav-link:hover { color: var(--color-sage-deep); }
+  .nav-right { display: flex; align-items: center; gap: 16px; }
+  .lang-toggle {
+    display: flex; gap: 4px;
+    background: rgba(251, 248, 242, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 4px 8px;
+    border-radius: 100px;
+    border: 1px solid rgba(251, 248, 242, 0.3);
+    transition: all 0.3s ease;
+  }
+  .navbar.scrolled .lang-toggle {
+    background: var(--color-cream);
+    border-color: var(--color-wood-line);
+  }
+  .lang-toggle button {
+    background: transparent; border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--color-cream);
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 100px;
+    transition: all 0.3s ease;
+  }
+  .navbar.scrolled .lang-toggle button { color: var(--color-stone-soft); }
+  .lang-toggle button.active {
+    background: var(--color-cream);
+    color: var(--color-stone);
+  }
+  .navbar.scrolled .lang-toggle button.active {
+    background: var(--color-stone);
+    color: var(--color-cream);
+  }
+  .menu-toggle {
+    display: none;
+    background: none; border: none;
+    cursor: pointer;
+    padding: 8px;
+    color: var(--color-cream);
+    transition: color 0.4s ease;
+  }
+  .navbar.scrolled .menu-toggle { color: var(--color-stone); }
+  .menu-toggle svg { display: block; width: 22px; height: 22px; }
+  @media (max-width: 900px) {
+    .nav-links {
+      position: fixed; top: 0; right: -100%;
+      width: 80%; max-width: 320px;
+      height: 100vh;
+      background: var(--color-paper);
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 60px 40px;
+      gap: 8px;
+      transition: right 0.4s ease;
+      box-shadow: -10px 0 40px rgba(0,0,0,0.1);
+    }
+    .nav-links.open { right: 0; }
+    .nav-link {
+      color: var(--color-stone) !important;
+      font-size: 13px;
+      padding: 12px 0;
+      width: 100%;
+      text-align: left;
+      border-bottom: 1px solid var(--color-wood-line);
+    }
+    .menu-toggle { display: block; }
+  }
+  .menu-overlay {
+    position: fixed; inset: 0;
+    background: rgba(44,42,38,0.5);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 85;
+  }
+  .menu-overlay.show { opacity: 1; pointer-events: auto; }
+
+  /* ============ HERO ============ */
+  .hero {
+    height: 100vh; min-height: 720px;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(44,42,38,0.35) 0%, rgba(44,42,38,0.55) 100%),
+      url('https://images.unsplash.com/photo-1519741497674-611481863552?w=2000&q=80') center/cover;
+  }
+  .hero-bg::after {
+    content: ''; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.12'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center;
+    color: var(--color-cream);
+    padding: 0 24px;
+    animation: fadeUp 1.4s ease-out;
+  }
+  .hero-eyebrow {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    opacity: 0.9; margin-bottom: 32px; font-weight: 400;
+  }
+  .hero-eyebrow::before, .hero-eyebrow::after {
+    content: ''; display: inline-block;
+    width: 32px; height: 1px;
+    background: var(--color-cream);
+    vertical-align: middle; margin: 0 16px; opacity: 0.7;
+  }
+  .hero-names {
+    font-family: 'Italianno', cursive;
+    font-size: clamp(72px, 14vw, 180px);
+    line-height: 0.95; font-weight: 400;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+  }
+  .hero-amp {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.7em; opacity: 0.85;
+    display: inline-block; margin: 0 0.1em;
+  }
+  .hero-date {
+    margin-top: 40px; font-size: 13px;
+    letter-spacing: 6px; text-transform: uppercase;
+    font-weight: 400;
+  }
+  .hero-location {
+    margin-top: 8px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 18px; opacity: 0.85;
+  }
+  .scroll-hint {
+    position: absolute; bottom: 40px; left: 50%;
+    transform: translateX(-50%);
+    color: var(--color-cream);
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    opacity: 0.6;
+    animation: bounce 2s infinite;
+    z-index: 2;
+  }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes bounce { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, -8px); } }
+
+  /* ============ SECTION BASE ============ */
+  section {
+    padding: 100px 24px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .section-eyebrow {
+    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--color-sage-deep);
+    text-align: center; margin-bottom: 16px;
+    font-weight: 500;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 6vw, 52px);
+    font-weight: 400; text-align: center;
+    margin-bottom: 12px; line-height: 1.1;
+  }
+  .section-title em { font-style: italic; color: var(--color-sage-deep); }
+  .ornament {
+    text-align: center; margin: 24px 0 48px;
+    color: var(--color-gold);
+    letter-spacing: 8px; font-size: 12px;
+  }
+
+  /* ============ PROTAGONISTI ============ */
+  .protagonisti-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 32px; margin-top: 16px;
+  }
+  .protagonista { text-align: center; }
+  .protagonista-avatar {
+    width: 120px; height: 120px;
+    border-radius: 50%; margin: 0 auto 16px;
+    overflow: hidden;
+    border: 2px solid var(--color-gold-soft);
+    box-shadow: var(--shadow-soft);
+  }
+  .protagonista-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .protagonista-ruolo {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--color-sage-deep); margin-bottom: 6px;
+  }
+  .protagonista-nome {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; margin-bottom: 6px;
+  }
+  .protagonista-bio {
+    font-size: 13px; color: var(--color-stone-soft);
+    line-height: 1.6;
+  }
+
+  /* ============ BENVENUTO ============ */
+  .benvenuto-photo {
+    width: 100%; max-width: 480px;
+    margin: 0 auto 48px;
+    border-radius: 4px; overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    aspect-ratio: 4/5;
+  }
+  .benvenuto-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .benvenuto-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-style: italic;
+    line-height: 1.6; text-align: center;
+    color: var(--color-stone);
+    max-width: 580px; margin: 0 auto;
+  }
+  .benvenuto-firma {
+    font-family: 'Italianno', cursive;
+    font-size: 36px; text-align: center;
+    margin-top: 32px; color: var(--color-sage-deep);
+  }
+
+  /* ============ COUNTDOWN ============ */
+  .countdown-section {
+    background: var(--color-paper);
+    max-width: none; text-align: center;
+  }
+  .countdown-inner { max-width: 720px; margin: 0 auto; }
+  .countdown { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+  .countdown-unit {
+    flex: 1; min-width: 70px; max-width: 120px;
+    padding: 24px 12px;
+    background: var(--color-cream);
+    border: 1px solid var(--color-wood-line);
+    border-radius: 4px;
+  }
+  .countdown-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 8vw, 56px);
+    line-height: 1; color: var(--color-stone); font-weight: 400;
+  }
+  .countdown-label {
+    margin-top: 8px; font-size: 10px;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--color-stone-soft);
+  }
+
+  /* ============ RSVP ============ */
+  .rsvp-section {
+    background: var(--color-stone);
+    color: var(--color-cream);
+    max-width: none;
+    position: relative; overflow: hidden;
+  }
+  .rsvp-section::before {
+    content: ''; position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80') center/cover;
+    opacity: 0.1;
+  }
+  .rsvp-inner { max-width: 540px; margin: 0 auto; position: relative; z-index: 2; }
+  .rsvp-section .section-eyebrow { color: var(--color-gold-soft); }
+  .rsvp-section .section-title { color: var(--color-cream); }
+  .rsvp-section .section-title em { color: var(--color-gold-soft); }
+  .rsvp-section .ornament { color: var(--color-gold); }
+  .form-group { margin-bottom: 24px; }
+  .form-label {
+    display: block; font-size: 11px;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--color-gold-soft); margin-bottom: 10px; font-weight: 500;
+  }
+  .form-input, .form-select, .form-textarea {
+    width: 100%; padding: 14px 16px;
+    background: rgba(251, 248, 242, 0.08);
+    border: 1px solid rgba(251, 248, 242, 0.2);
+    color: var(--color-cream);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    outline: none; border-color: var(--color-gold);
+    background: rgba(251, 248, 242, 0.12);
+  }
+  .form-textarea { min-height: 90px; resize: vertical; }
+  .radio-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .radio-option { position: relative; cursor: pointer; }
+  .radio-option input { position: absolute; opacity: 0; }
+  .radio-label {
+    display: block; padding: 16px; text-align: center;
+    border: 1px solid rgba(251, 248, 242, 0.2);
+    border-radius: 2px; transition: all 0.3s ease;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-style: italic;
+  }
+  .radio-option input:checked + .radio-label {
+    background: var(--color-gold);
+    border-color: var(--color-gold);
+    color: var(--color-stone);
+  }
+  .number-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .btn-primary {
+    width: 100%; padding: 18px;
+    background: var(--color-gold); border: none;
+    color: var(--color-stone);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 3px; text-transform: uppercase;
+    cursor: pointer; border-radius: 2px;
+    transition: all 0.3s ease; margin-top: 8px;
+  }
+  .btn-primary:hover {
+    background: var(--color-gold-soft);
+    transform: translateY(-1px);
+  }
+
+  /* ============ REGALI ============ */
+  .gift-section { background: var(--color-paper); max-width: none; }
+  .gift-inner { max-width: 720px; margin: 0 auto; }
+  .gift-photo {
+    width: 100%; max-width: 480px;
+    margin: 0 auto 48px;
+    aspect-ratio: 16/9;
+    overflow: hidden; border-radius: 4px;
+    box-shadow: var(--shadow-soft);
+  }
+  .gift-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .gift-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-top: 16px;
+  }
+  @media (max-width: 600px) { .gift-cards { grid-template-columns: 1fr; } }
+  .gift-card {
+    padding: 32px 24px;
+    background: var(--color-cream);
+    border: 1px solid var(--color-wood-line);
+    border-radius: 4px; text-align: center;
+    transition: all 0.3s ease;
+  }
+  .gift-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); }
+  .gift-icon { font-size: 28px; margin-bottom: 16px; }
+  .gift-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 12px; }
+  .gift-desc { font-size: 13px; color: var(--color-stone-soft); margin-bottom: 20px; line-height: 1.6; }
+  .gift-btn {
+    display: inline-block; padding: 10px 24px;
+    background: var(--color-stone); color: var(--color-cream);
+    text-decoration: none;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    border-radius: 2px; transition: all 0.3s ease;
+    cursor: pointer; border: none; font-family: inherit;
+  }
+  .gift-btn:hover { background: var(--color-sage-deep); }
+  .iban-box {
+    margin-top: 24px; padding: 20px;
+    background: var(--color-cream);
+    border: 1px dashed var(--color-gold);
+    border-radius: 4px; text-align: center;
+  }
+  .iban-label {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--color-stone-soft); margin-bottom: 8px;
+  }
+  .iban-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; letter-spacing: 2px;
+    color: var(--color-stone);
+    margin-bottom: 12px; word-break: break-all;
+  }
+  .copy-btn {
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--color-sage-deep);
+    background: none; border: none;
+    cursor: pointer; font-family: inherit;
+  }
+
+  /* ============ TIMELINE ============ */
+  .timeline { position: relative; padding-left: 40px; margin-top: 16px; }
+  .timeline::before {
+    content: ''; position: absolute;
+    left: 8px; top: 12px; bottom: 12px;
+    width: 1px; background: var(--color-sage); opacity: 0.4;
+  }
+  .timeline-item { position: relative; padding-bottom: 32px; }
+  .timeline-item:last-child { padding-bottom: 0; }
+  .timeline-item::before {
+    content: ''; position: absolute;
+    left: -38px; top: 8px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--color-cream);
+    border: 2px solid var(--color-sage-deep);
+  }
+  .timeline-time {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 20px;
+    color: var(--color-sage-deep); margin-bottom: 4px;
+  }
+  .timeline-title {
+    font-size: 15px; font-weight: 500; margin-bottom: 4px;
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+  .timeline-desc { font-size: 13px; color: var(--color-stone-soft); }
+
+  /* ============ MAPPE ============ */
+  .map-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-top: 16px;
+  }
+  @media (max-width: 600px) { .map-buttons { grid-template-columns: 1fr; } }
+  .map-btn {
+    background: var(--color-paper);
+    border: 1px solid var(--color-wood-line);
+    border-radius: 4px;
+    text-decoration: none; color: var(--color-stone);
+    transition: all 0.3s ease;
+    display: block; overflow: hidden;
+  }
+  .map-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-soft); }
+  .map-btn-photo { width: 100%; aspect-ratio: 16/10; overflow: hidden; }
+  .map-btn-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+  .map-btn:hover .map-btn-photo img { transform: scale(1.05); }
+  .map-btn-content { padding: 24px 20px; text-align: center; }
+  .map-label {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--color-sage-deep); margin-bottom: 6px;
+  }
+  .map-name { font-family: 'Cormorant Garamond', serif; font-size: 18px; margin-bottom: 8px; }
+  .map-cta { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--color-gold); }
+
+  /* ============ HOTEL ============ */
+  .hotel-list { margin-top: 16px; }
+  .hotel-item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px; padding: 24px 0;
+    border-bottom: 1px solid var(--color-wood-line);
+    align-items: center;
+  }
+  .hotel-item:last-child { border-bottom: none; }
+  .hotel-photo {
+    width: 120px; height: 120px;
+    border-radius: 4px; overflow: hidden; flex-shrink: 0;
+  }
+  .hotel-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .hotel-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 4px; }
+  .hotel-desc { font-size: 13px; color: var(--color-stone-soft); margin-bottom: 12px; }
+  .hotel-tel {
+    display: inline-block; padding: 8px 18px;
+    background: var(--color-sage); color: var(--color-cream);
+    text-decoration: none;
+    font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+    border-radius: 100px;
+  }
+  @media (max-width: 600px) {
+    .hotel-item { grid-template-columns: 1fr; }
+    .hotel-photo { width: 100%; height: 200px; }
+  }
+
+  /* ============ NAVETTA ============ */
+  .navetta-box {
+    margin-top: 16px; padding: 28px;
+    background: var(--color-paper);
+    border-left: 3px solid var(--color-sage);
+    border-radius: 0 4px 4px 0;
+  }
+  .navetta-tratta {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--color-wood-line);
+  }
+  .navetta-tratta:last-child { border-bottom: none; }
+  .navetta-info { font-family: 'Cormorant Garamond', serif; font-size: 16px; }
+  .navetta-orario {
+    font-weight: 500; color: var(--color-sage-deep);
+    font-family: 'Inter', sans-serif; font-size: 14px;
+  }
+
+  /* ============ DRESS CODE ============ */
+  .dresscode-box {
+    margin-top: 16px; padding: 40px 32px;
+    text-align: center;
+    background: var(--color-paper);
+    border: 1px solid var(--color-wood-line);
+    border-radius: 4px;
+  }
+  .dresscode-photo {
+    width: 100%; max-width: 320px;
+    margin: 0 auto 24px;
+    aspect-ratio: 1/1;
+    overflow: hidden; border-radius: 50%;
+    border: 2px solid var(--color-gold-soft);
+  }
+  .dresscode-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .dresscode-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 20px;
+    line-height: 1.5; color: var(--color-stone);
+  }
+  .dresscode-detail { margin-top: 12px; font-size: 13px; color: var(--color-stone-soft); }
+
+  /* ============ TABLEAU ============ */
+  .tableau-search { margin-top: 16px; position: relative; }
+  .tableau-search input {
+    width: 100%; padding: 18px 24px 18px 50px;
+    background: var(--color-paper);
+    border: 1px solid var(--color-wood-line);
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px; color: var(--color-stone);
+  }
+  .tableau-search input:focus { outline: none; border-color: var(--color-sage); }
+  .tableau-search::before {
+    content: '⌕'; position: absolute;
+    left: 20px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px; color: var(--color-stone-soft);
+  }
+  .tableau-result {
+    margin-top: 16px; padding: 24px;
+    background: var(--color-paper);
+    border-radius: 4px; text-align: center;
+    display: none;
+  }
+  .tableau-result.show { display: block; }
+  .tableau-tavolo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; color: var(--color-sage-deep);
+    font-style: italic;
+  }
+
+  /* ============ MENU ============ */
+  .menu-photo {
+    width: 100%; max-width: 480px;
+    margin: 0 auto 48px;
+    aspect-ratio: 16/9;
+    overflow: hidden; border-radius: 4px;
+    box-shadow: var(--shadow-soft);
+  }
+  .menu-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .menu-list { margin-top: 16px; }
+  .menu-category { margin-bottom: 32px; }
+  .menu-cat-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-style: italic;
+    color: var(--color-sage-deep);
+    text-align: center; margin-bottom: 16px;
+    letter-spacing: 1px;
+  }
+  .menu-cat-title::before, .menu-cat-title::after { content: '·'; margin: 0 12px; }
+  .menu-piatto {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px; margin-bottom: 8px;
+    color: var(--color-stone);
+  }
+
+  /* ============ PARTY ============ */
+  .party-section {
+    background: var(--color-stone); color: var(--color-cream);
+    max-width: none;
+    position: relative; overflow: hidden;
+  }
+  .party-section::before {
+    content: ''; position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1530023367847-a683933f4172?w=1600&q=80') center/cover;
+    opacity: 0.25;
+  }
+  .party-inner { max-width: 720px; margin: 0 auto; position: relative; z-index: 2; }
+  .party-section .section-eyebrow { color: var(--color-gold-soft); }
+  .party-section .section-title { color: var(--color-cream); }
+  .party-section .section-title em { color: var(--color-gold); }
+  .party-section .ornament { color: var(--color-gold); }
+  .party-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; text-align: center;
+    color: var(--color-cream); opacity: 0.95;
+    line-height: 1.7;
+  }
+
+  /* ============ GIORNO DOPO ============ */
+  .giorno-dopo-photo {
+    width: 100%; max-width: 480px;
+    margin: 0 auto 32px;
+    aspect-ratio: 16/9;
+    overflow: hidden; border-radius: 4px;
+    box-shadow: var(--shadow-soft);
+  }
+  .giorno-dopo-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .giorno-dopo-box {
+    margin-top: 16px; padding: 32px;
+    background: var(--color-paper);
+    border: 1px solid var(--color-wood-line);
+    border-radius: 4px;
+  }
+  .giorno-dopo-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px; line-height: 1.7;
+    color: var(--color-stone);
+  }
+
+  /* ============ GUESTBOOK ============ */
+  .guestbook-section { background: var(--color-paper); max-width: none; }
+  .guestbook-inner { max-width: 540px; margin: 0 auto; }
+  .guestbook-form { margin-top: 16px; }
+  .guestbook-form .form-input, .guestbook-form .form-textarea {
+    background: var(--color-cream);
+    border: 1px solid var(--color-wood-line);
+    color: var(--color-stone);
+  }
+  .guestbook-form .form-input:focus, .guestbook-form .form-textarea:focus { border-color: var(--color-sage); }
+  .guestbook-form .form-label { color: var(--color-stone-soft); }
+  .guestbook-form .btn-primary { background: var(--color-sage-deep); color: var(--color-cream); }
+  .guestbook-form .btn-primary:hover { background: var(--color-sage); }
+  .dediche-list { margin-top: 32px; }
+  .dedica {
+    padding: 20px;
+    background: var(--color-cream);
+    border-left: 2px solid var(--color-gold);
+    margin-bottom: 12px;
+    border-radius: 0 4px 4px 0;
+  }
+  .dedica-testo {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 16px;
+    line-height: 1.6; color: var(--color-stone);
+  }
+  .dedica-firma {
+    margin-top: 8px;
+    font-family: 'Italianno', cursive;
+    font-size: 22px; color: var(--color-sage-deep);
+  }
+  .playlist-card {
+    margin-top: 32px; padding: 24px;
+    background: var(--color-cream);
+    border-radius: 4px; text-align: center;
+    border: 1px solid var(--color-wood-line);
+  }
+  .playlist-title { font-family: 'Cormorant Garamond', serif; font-size: 22px; margin-bottom: 12px; }
+
+  /* ============ FOTO LIVE ============ */
+  .foto-section {
+    background: linear-gradient(135deg, var(--color-sage-deep) 0%, #5d6f4f 100%);
+    color: var(--color-cream);
+    max-width: none;
+    position: relative; overflow: hidden;
+  }
+  .foto-section::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E");
+  }
+  .foto-inner { max-width: 540px; margin: 0 auto; position: relative; }
+  .foto-section .section-eyebrow { color: var(--color-gold-soft); }
+  .foto-section .section-title { color: var(--color-cream); }
+  .foto-section .section-title em { color: var(--color-gold-soft); font-style: italic; }
+  .foto-section .ornament { color: var(--color-gold-soft); }
+  .upload-zone {
+    margin-top: 16px; padding: 48px 24px;
+    border: 2px dashed rgba(251, 248, 242, 0.4);
+    border-radius: 4px; text-align: center;
+    cursor: pointer; transition: all 0.3s ease;
+    background: rgba(0,0,0,0.1); display: block;
+  }
+  .upload-zone:hover {
+    border-color: var(--color-gold-soft);
+    background: rgba(0,0,0,0.2);
+  }
+  .upload-icon { font-size: 40px; margin-bottom: 16px; opacity: 0.8; }
+  .upload-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-style: italic;
+    margin-bottom: 8px;
+  }
+  .upload-hint { font-size: 12px; opacity: 0.7; letter-spacing: 1px; }
+  .gallery-preview {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px; margin-top: 32px;
+  }
+  .gallery-preview img {
+    width: 100%; aspect-ratio: 1/1;
+    object-fit: cover; border-radius: 2px;
+    opacity: 0.85; transition: opacity 0.3s ease;
+  }
+  .gallery-preview img:hover { opacity: 1; }
+
+  /* ============ FOOTER ============ */
+  footer {
+    padding: 60px 24px 40px;
+    text-align: center;
+    background: var(--color-stone); color: var(--color-cream);
+  }
+  .footer-ornament { color: var(--color-gold); letter-spacing: 8px; margin-bottom: 24px; opacity: 0.6; }
+  .footer-names { font-family: 'Italianno', cursive; font-size: 42px; margin-bottom: 8px; }
+  .footer-date {
+    font-size: 11px; letter-spacing: 3px; opacity: 0.7;
+    margin-bottom: 32px; text-transform: uppercase;
+  }
+  .footer-diswood {
+    padding-top: 24px;
+    border-top: 1px solid rgba(251, 248, 242, 0.1);
+    font-size: 10px; letter-spacing: 2px; opacity: 0.4; text-transform: uppercase;
+  }
+  .footer-diswood a { color: var(--color-cream); text-decoration: none; }
+
+  /* HIDDEN BY LANG */
+  [data-lang]:not(.lang-show) { display: none; }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="#hero" class="nav-logo">M &amp; C</a>
+  <button class="menu-toggle" id="menu-toggle" aria-label="Menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M3 6h18M3 12h18M3 18h18" />
+    </svg>
+  </button>
+  <div class="nav-links" id="nav-links">
+    <a href="#rsvp" class="nav-link"><span data-lang="it" class="lang-show">RSVP</span><span data-lang="fr">RSVP</span></a>
+    <a href="#programma" class="nav-link"><span data-lang="it" class="lang-show">Programma</span><span data-lang="fr">Programme</span></a>
+    <a href="#mappe" class="nav-link"><span data-lang="it" class="lang-show">Dove</span><span data-lang="fr">Où</span></a>
+    <a href="#hotel" class="nav-link"><span data-lang="it" class="lang-show">Hotel</span><span data-lang="fr">Hôtel</span></a>
+    <a href="#regali" class="nav-link"><span data-lang="it" class="lang-show">Regali</span><span data-lang="fr">Cadeaux</span></a>
+    <a href="#foto" class="nav-link"><span data-lang="it" class="lang-show">Foto</span><span data-lang="fr">Photos</span></a>
+  </div>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="active" data-switch="it">IT</button>
+      <button data-switch="fr">FR</button>
+    </div>
+  </div>
+</nav>
+<div class="menu-overlay" id="menu-overlay"></div>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span data-lang="it" class="lang-show">Si sposano</span>
+      <span data-lang="fr">Se marient</span>
+    </div>
+    <h1 class="hero-names">Marco<span class="hero-amp">&amp;</span>Chiara</h1>
+    <div class="hero-date">12 · 07 · 2026</div>
+    <div class="hero-location">
+      <span data-lang="it" class="lang-show">Castello di Aymavilles · Valle d'Aosta</span>
+      <span data-lang="fr">Château d'Aymavilles · Vallée d'Aoste</span>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span data-lang="it" class="lang-show">Scorri</span>
+    <span data-lang="fr">Faire défiler</span>
+  </div>
+</div>
+
+<!-- PROTAGONISTI -->
+<section id="protagonisti">
+  <div class="section-eyebrow"><span data-lang="it" class="lang-show">Capitolo 01</span><span data-lang="fr">Chapitre 01</span></div>
+  <h2 class="section-title">
+    <span data-lang="it" class="lang-show">I <em>protagonisti</em></span>
+    <span data-lang="fr">Les <em>protagonistes</em></span>
+  </h2>
+  <div class="ornament">· · ·</div>
+  <div class="protagonisti-grid">
+    <div class="protagonista">
+      <div class="protagonista-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" alt="Luca"></div>
+      <div class="protagonista-ruolo"><span data-lang="it" class="lang-show">Testimone di Marco</span><span data-lang="fr">Témoin de Marco</span></div>
+      <div class="protagonista-nome">Luca Bertin</div>
+      <div class="protagonista-bio">
+        <span data-lang="it" class="lang-show">Amico d'infanzia, compagno di avventure dal liceo.</span>
+        <span data-lang="fr">Ami d'enfance, compagnon d'aventures depuis le lycée.</span>
+      </div>
+    </div>
+    <div class="protagonista">
+      <div class="protagonista-avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=80" alt="Giulia"></div>
+      <div class="protagonista-ruolo"><span data-lang="it" class="lang-show">Testimone di Chiara</span><span data-lang="fr">Témoin de Chiara</span></div>
+      <div class="protagonista-nome">Giulia Rossi</div>
+      <div class="protagonista-bio">
+        <span data-lang="it" class="lang-show">Sorella di vita, presente in ogni momento importante.</span>
+        <span data-lang="fr">Sœur de cœur, présente à chaque moment important.</span>
+      </div>
+    </div>
+    <div class="protagonista">
+      <div class="protagonista-avatar"><img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80" alt="Famiglia"></div>
+      <div class="protagonista-ruolo"><span data-lang="it" class="lang-show">Genitori sposo</span><span data-lang="fr">Parents du marié</span></div>
+      <div class="protagonista-nome">Famiglia Rosset</div>
+      <div class="protagonista-bio">
+        <span data-lang="it" class="lang-show">Paolo & Anna, le fondamenta di tutto.</span>
+        <span data-lang="fr">Paolo & Anna, les fondations de tout.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENVENUTO -->
+<section id="benvenuto">
+  <div class="section-eyebrow"><span data-lang="it" class="lang-show">Capitolo 02</span><span data-lang="fr">Chapitre 02</span></div>
+  <h2 class="section-title">
+    <span data-lang="it" class="lang-show">Un <em>messaggio</em> per voi</span>
+    <span data-lang="fr">Un <em>message</em> pour vous</span>
+  </h2>
+  <div class="ornament">· · ·</div>
+  <div class="benvenuto-photo">
+    <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=800&q=80" alt="Marco e Chiara">
+  </div>
+  <p class="benvenuto-text">
+    <span data-lang="it" class="lang-show">«Dopo anni di sentieri percorsi insieme, di rifugi conquistati a fatica e di tramonti sul Bianco, abbiamo deciso di firmare il capitolo più importante della nostra storia. E vogliamo farlo con voi.»</span>
+    <span data-lang="fr">« Après des années de sentiers parcourus ensemble, de refuges conquis à grand-peine et de couchers de soleil sur le Mont-Blanc, nous avons décidé d'écrire le chapitre le plus important de notre histoire. Et nous voulons le faire avec vous. »</span>
+  </p>
+  <div class="benvenuto-firma">Marco &amp; Chiara</div>
+</section>
+
+<!-- COUNTDOWN -->
+<section class="countdown-section">
+  <div class="countdown-inner">
+    <div class="section-eyebrow"><span data-lang="it" class="lang-show">Manca poco</span><span data-lang="fr">Bientôt</span></div>
+    <h2 class="section-title">
+      <span data-lang="it" class="lang-show">Il <em>conto</em> alla rovescia</span>
+      <span data-lang="fr">Le <em>compte</em> à rebours</span>
+    </h2>
+    <div class="ornament">· · ·</div>
+    <div class="countdown">
+      <div class="countdown-unit">
+        <div class="countdown-num" id="cd-days">—</div>
+        <div class="countdown-label"><span data-lang="it" class="lang-show">Giorni</span><span data-lang="fr">Jours</span></div>
+      </div>
+      <div class="countdown-unit">
+        <div class="countdown-num" id="cd-hours">—</div>
+        <div class="countdown-label"><span data-lang="it" class="lang-show">Ore</span><span data-lang="fr">Heures</span></div>
+      </div>
+      <div class="countdown-unit">
+        <div class="countdown-num" id="cd-mins">—</div>
+        <div class="countdown-label"><span data-lang="it" class="lang-show">Minuti</span><span data-lang="fr">Minutes</span></div>
+      </div>
+      <div class="countdown-unit">
+        <div class="countdown-num" id="cd-secs">—</div>
+        <div class="countdown-label"><span data-lang="it" class="lang-show">Secondi</span><span data-lang="fr">Secondes</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RSVP -->
+<section class="rsvp-section" id="rsvp">
+  <div class="rsvp-inner">
+    <div class="section-eyebrow"><span data-lang="it" class="lang-show">Capitolo 03</span><span data-lang="fr">Chapitre 03</span></div>
+    <h2 class="section-title">
+      <span data-lang="it" class="lang-show">Conferma la <em>tua</em> presenza</span>
+      <span data-lang="fr">Confirmez votre <em>présence</em></span>
+    </h2>
+    <div class="ornament">· · ·</div>
+    <form id="rsvp-form">
+      <div class="form-group">
+        <label class="form-label"><span data-lang="it" class="lang-show">Nome e cognome</span><span data-lang="fr">Nom et prénom</span></label>
+        <input type="text" class="form-input" placeholder="Mario Rossi" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label"><span data-lang="it" class="lang-show">Sarai presente?</span><span data-lang="fr">Serez-vous présent ?</span></label>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" name="presenza" value="si" required>
+            <span class="radio-label"><span data-lang="it" class="lang-show">Con gioia</span><span data-lang="fr">Avec joie</span></span>
+          </label>
+          <label class="radio-option">
+            <input type="radio" name="presenza" value="no">
+            <span class="radio-label"><span data-lang="it" class="lang-show">Non potrò</span><span data-lang="fr">Je ne pourrai pas</span></span>
+          </label>
+        </div>
+      </div>
+      <div class="number-row">
+        <div class="form-group">
+          <label class="form-label"><span data-lang="it" class="lang-show">Adulti</span><span data-lang="fr">Adultes</span></label>
+          <input type="number" class="form-input" min="0" value="1">
+        </div>
+        <div class="form-group">
+          <label class="form-label"><span data-lang="it" class="lang-show">Bambini</span><span data-lang="fr">Enfants</span></label>
+          <input type="number" class="form-input" min="0" value="0">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label"><span data-lang="it" class="lang-show">Telefono</span><span data-lang="fr">Téléphone</span></label>
+        <input type="tel" class="form-input" placeholder="+39 333 1234567">
+      </div>
+      <div class="form-group">
+        <label class="form-label"><span data-lang="it" class="lang-show">Allergie o intolleranze</span><span data-lang="fr">Allergies ou intolérances</span></label>
+        <input type="text" class="form-input" placeholder="—">
+      </div>
+      <div class="form-group">
+        <label class="form-label"><span data-lang="it" class="lang-show">Un messaggio per gli sposi</span><span data-lang="fr">Un message pour les mariés</span></label>
+        <textarea class="form-textarea" placeholder="..."></textarea>
+      </div>
+      <button type="submit" class="btn-primary">
+        <span data-lang="it" class="lang-show">Invia la conferma</span>
+        <span data-lang="fr">Envoyer la confirmation</span>
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- REGALI -->
+<section class="gift-section" id="regali">
+  <div class="gift-inner">
+    <div class="section-eyebrow"><span data-lang="it" class="lang-show">Capitolo 04</span><span data-lang="fr">Chapitre 04</span></div>
+    <h2 class="section-title">
+      <span data-lang="it" class="lang-show">Il vostro <em>pensiero</em></span>
+      <span data-lang="fr">Votre <em>cadeau</em></span>
+    </h2>
+    <div class="ornament">· · ·</div>
+    <div class="gift-photo">
+      <img src="https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=800&q=80" alt="Regali">
+    </div>
+    <div class="gift-cards">
+      <div class="gift-card">
+        <div class="gift-icon">◆</div>
+        <h3 class="gift-title"><span data-lang="it" class="lang-show">Lista Nozze</span><span data-lang="fr">Liste de mariage</span></h3>
+        <p class="gift-desc">
+          <span data-lang="it" class="lang-show">Una selezione di oggetti per la nostra nuova casa.</span>
+          <span data-lang="fr">Une sélection d'objets pour notre nouvelle maison.</span>
+        </p>
+        <a href="#" class="gift-btn"><span data-lang="it" class="lang-show">Apri lista</span><span data-lang="fr">Voir la liste</span></a>
+      </div>
+      <div class="gift-card">
+        <div class="gift-icon">✈</div>
+        <h3 class="gift-title"><span data-lang="it" class="lang-show">Fondo Viaggio</span><span data-lang="fr">Fonds Voyage</span></h3>
+        <p class="gift-desc">
+          <span data-lang="it" class="lang-show">Contribuisci alla nostra luna di miele in Patagonia.</span>
+          <span data-lang="fr">Contribuez à notre lune de miel en Patagonie.</span>
+        </p>
+        <button class="gift-btn" onclick="document.getElementById('iban-box').scrollIntoView({behavior:'smooth'})">
+          <span data-lang="it" class="lang-show">IBAN</span><span data-lang="fr">IBAN</span>
+        </button>
+      </div>
+    </div>
+    <div class="iban-box" id="iban-box">
+      <div class="iban-label"><span data-lang="it" class="lang-show">Coordinate bancarie</span><span data-lang="fr">Coordonnées bancaires</span></div>
+      <div class="iban-number" id="iban-num">IT60 X054 2811 1010 0000 0123 456</div>
+      <button class="copy-btn" onclick="copyIban()">
+        <span data-lang="it" class="lang-show">⎘ Copia IBAN</span>
+        <span data-lang="fr">⎘ Copier IBAN</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="programma">
+  <div class="section-eyebrow"><span data-lang="it" class="lang-show">Capitolo 05</span><span data-lang="fr">Chapitre 05</span></div>
+  <h2 class="section-title">
+    <span data-lang="it" class="lang-show">Il <em>programma</em> della giornata</span>
+    <span data-lang="fr">Le <em>programme</em> de la journée</span>
+  </h2>
+  <div class="ornament">· · ·</div>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-time">15:30</div>
+      <div class="timeline-title"><span data-lang="it" class="lang-show">Cerimonia</span><span data-lang="fr">Cérémonie</span></div>
+      <div class="timeline-desc">
+        <span data-lang="it" class="lang-show">Castello di Aymavilles · Sala delle Colonne</span>
+        <span data-lang="fr">Château d'Aymavilles · Salle des Colonnes</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">17:00</div>
+      <div class="timeline-title"><span data-lang="it" class="lang-show">Aperitivo</span><span data-lang="fr">Apéritif</span></div>
+      <div class="timeline-desc">
+        <span data-lang="it" class="lang-show">Terrazza panoramica · vista sulla Grivola</span>
+        <span data-lang="fr">Terrasse panoramique · vue sur la Grivola</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">19:30</div>
+      <div class="timeline-title"><span data-lang="it" class="lang-show">Cena</span><span data-lang="fr">Dîner</span></div>
+      <div class="timeline-desc">
+        <span data-lang="it" class="lang-show">Sala del Camino · cucina valdostana</span>
+        <span data-lang="fr">Salle de la Cheminée · cuisine valdôtaine</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-time">23:00</div>
+      <div class="timeline-title"><span data-lang="it" class="lang-show">Festa</span><span data-lang="fr">Fête</span></div>
+      <div class="timeline-desc">
+        <span data-lang="it" class="lang-show">DJ set & open bar fino a tarda notte</span>
+        <span data-lang="fr">DJ set & open bar jusqu'à tard dans la nuit</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAPPE -->
+<section id="mappe">
+  <div class="section-eyebrow"><span data-lang="it" class="lang-show">Come arrivare</span><span data-lang="fr">Comment arriver</span></div>
+  <h2 class="section-title">
+    <span data-lang="it" class="lang-show">Le <em>indicazioni</em></span>
+    <span data-lang="fr">Les <em>indications</em></span>
+  </h2>
+  <div class="ornament">· · ·</div>
+  <div class="map-buttons">
+    <a href="https://maps.google.com/?q=Castello+Aymavilles" target="_blank" class="map-btn">
+      <div class="map-btn-photo"><img src="https://images.unsplash.com/photo-1599891987949-d57121f10d51?w=600&q=80" alt="Cerimonia"></div>
+      <div class="map-btn-content">
+        <div class="map-label"><span data-lang="it" class="lang-show">Cerimonia</span><span data-lang="fr">Cérémonie</span></div>
+        <div class="map-name">Castello di Aymavilles</div>
+        <div class="map-cta"><span data-lang="it" class="lang-show">Naviga →</span><span data-lang="fr">Naviguer →</span></div>
+      </div>
+    </a>
+    <a href="https://maps.google.com/?q=Castello+Aymavilles" target="_blank" class="map-btn">
+      <div class="map-btn-photo"><img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600&q=80" alt="Ricevimento"></div>
+      <div class="map-btn-content">
+        <div class="map-label"><span data-lang="it" class="lang-show">Ricevimento</span><span data-lang="fr">Réception</span></div>
+        <div class="map-name">Sala del Camino</div>
+        <div class="map-cta"><span data-lang="it" class="lang-show">Naviga →</span><span data-lang="fr">Naviguer →</span></div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- HOTEL -->
+<section id="hotel">
+  <div class="section-eyebrow"><span data-lang="it" class="lang-show">Per chi viene da lontano</span><span data-lang="fr">Pour ceux qui viennent de loin</span></div>
+  <h2 class="section-title">
+    <span data-lang="it" class="lang-show">Dove <em>dormire</em></span>
+    <span data-lang="fr">Où <em>dormir</em></span>
+  </h2>
+  <div class="ornament">· · ·</div>
+  <div class="hotel-list">
+    <div class="hotel-item">
+      <div class="hotel-photo"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&q=80" alt="Hotel Bellevue"></div>
+      <div>
+        <div class="hotel-name">Hotel Bellevue ★★★★</div>
+        <div class="hotel-desc">
+          <span data-lang="it" class="lang-show">A 5 minuti dal castello · convenzione per i nostri ospiti</span>
+          <span data-lang="fr">À 5 minutes du château · tarif préférentiel pour nos invités</span>
+        </div>
+        <a href="tel:+390165902101" class="hotel-tel">+39 0165 902101</a>
+      </div>
+    </div>
+    <div class="hotel-item">
+      <div class="hotel-photo"><img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=400&q=80" alt="Maison du Mont Blanc"></div>
+      <div>
+        <div class="hotel-name">Maison du Mont Blanc ★★★</div>
+        <div class="hotel-desc">
+          <span data-lang="it" class="lang-show">Chalet di charme · colazione inclusa</span>
+          <span data-lang="fr">Chalet de charme · petit-déjeuner inclus</span>
+        </div>
+        <a href="tel:+390165844201" class="hotel-tel">+39 0165 844201</a>
+      </div>
+    </div>
+    <div class="hotel-item">
+      <div class="hotel-photo"><img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400&q=80" alt="B&B Le Bonheur"></div>
+      <div>
+        <div class="hotel-name">B&B Le Bonheur</div>
+        <div class="hotel-desc">
+          <span data-lang="it" class="lang-show">Soluzione economica · 3 camere disponibili</span>
+          <span data-lang="fr">Solution économique · 3 chambres disponibles</span>
+        </div>
+        <a href="tel:+393331234567" class="hotel-tel">+39 333 1234567</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NAVETTA -->
+<section id="navetta">
+  <div class="section-eyebrow"><span data-lang="it" class="lang-show">Servizio gratuito</span><span data-lang="fr">Service gratuit</span></div>
+  <h2 class="section-title">
+    <span data-lang="it" class="lang-show">Il <em>servizio</em> navetta</span>
+    <span data-lang="fr">Le service <em>navette</em></span>
+  </h2>
+  <div class="ornament">· · ·</div>
+  <div class="navetta-box">
+    <div class="navetta-tratta">
+      <div class="navetta-info"><span data-lang="it" class="lang-show">Aosta · Stazione → Castello</span><span data-lang="fr">Aoste · Gare → Château</span></div>
+      <div class="navetta-orario">14:30</div>
+    </div>
+    <div class="navetta-tratta">
+      <div class="navetta-info"><span data-lang="it" class="lang-show">Hotel Bellevue → Castello</span><span data-lang="fr">Hôtel Bellevue → Château</span></div>
+      <div class="navetta-orario">14:45</div>
+    </div>
+    <div class="navetta-tratta">
+      <div class="navetta-info"><span data-lang="it" class="lang-show">Castello → Hotel (ritorno)</span><span data-lang="fr">Château → Hôtel (retour)</span></div>
+      <div class="navetta-orario">02:00</div>
+    </div>
+  </div>
+</section>
+
+<!-- DRESS CODE -->
+<section id="dresscode">
+  <div class="section-eyebrow"><span data-lang="it" class="lang-show">Stile della serata</span><span data-lang="fr">Style de la soirée</span></div>
+  <h2 class="section-title">
+    <span data-lang="it" class="lang-show">Dress <em>code</em></span>
+    <span data-lang="fr">Dress <em>code</em></span>
+  </h2>
+  <div class="ornament">· · ·</div>
+  <div class="dresscode-box">
+    <div class="dresscode-photo">
+      <img src="https://images.unsplash.com/photo-1485518882345-15568b007407?w=600&q=80" alt="Dress code">
+    </div>
+    <div class="dresscode-text">
+      <span data-lang="it" class="lang-show">Elegante con un tocco di <em style="color:var(--color-sage-deep)">verde salvia</em></span>
+      <span data-lang="fr">Élégant avec une touche de <em style="color:var(--color-sage-deep)">vert sauge</em></span>
+    </div>
+    <div class="dresscode-detail">
+      <span data-lang="it" class="lang-show">Abito scuro per gli uomini · lunghezza midi/lunga per le donne</span>
+      <span data-lang="fr">Costume sombre pour les hommes · longueur midi/longue pour les femmes</span>
+    </div>
+  </div>
+</section>
+
+<!-- TABLEAU -->
+<section id="tableau">
+  <div class="section-eyebrow"><span data-lang="it" class="lang-show">Trova il tuo posto</span><span data-lang="fr">Trouvez votre place</span></div>
+  <h2 class="section-title">
+    <span data-lang="it" class="lang-show">Il <em>tableau</em> dei tavoli</span>
+    <span data-lang="fr">Le <em>plan</em> des tables</span>
+  </h2>
+  <div class="ornament">· · ·</div>
+  <div class="tableau-search">
+    <input type="text" id="tableau-input" placeholder="Cerca il tuo cognome..." oninput="searchTableau()">
+  </div>
+  <div class="tableau-result" id="tableau-result">
+    <div style="font-size:12px;letter-spacing:2px;color:var(--color-stone-soft);text-transform:uppercase;margin-bottom:8px;">
+      <span data-lang="it" class="lang-show">Sei al tavolo</span>
+      <span data-lang="fr">Vous êtes à la table</span>
+    </div>
+    <div class="tableau-tavolo" id="tableau-tavolo">—</div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="section-eyebrow"><span data-lang="it" class="lang-show">A tavola</span><span data-lang="fr">À table</span></div>
+  <h2 class="section-title">
+    <span data-lang="it" class="lang-show">Il <em>menù</em></span>
+    <span data-lang="fr">Le <em>menu</em></span>
+  </h2>
+  <div class="ornament">· · ·</div>
+  <div class="menu-photo">
+    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80" alt="Menu">
+  </div>
+  <div class="menu-list">
+    <div class="menu-category">
+      <div class="menu-cat-title"><span data-lang="it" class="lang-show">Antipasti</span><span data-lang="fr">Entrées</span></div>
+      <div class="menu-piatto"><span data-lang="it" class="lang-show">Carpaccio di fassona valdostana</span><span data-lang="fr">Carpaccio de fassone valdôtain</span></div>
+      <div class="menu-piatto"><span data-lang="it" class="lang-show">Tagliere di Fontina DOP & salumi</span><span data-lang="fr">Plateau de Fontine AOP & charcuterie</span></div>
+    </div>
+    <div class="menu-category">
+      <div class="menu-cat-title"><span data-lang="it" class="lang-show">Primi</span><span data-lang="fr">Premiers plats</span></div>
+      <div class="menu-piatto"><span data-lang="it" class="lang-show">Seupa à la valpellinentse</span><span data-lang="fr">Seupa à la valpellinentse</span></div>
+      <div class="menu-piatto"><span data-lang="it" class="lang-show">Risotto al Bleu d'Aoste e noci</span><span data-lang="fr">Risotto au Bleu d'Aoste et noix</span></div>
+    </div>
+    <div class="menu-category">
+      <div class="menu-cat-title"><span data-lang="it" class="lang-show">Secondi</span><span data-lang="fr">Plats principaux</span></div>
+      <div class="menu-piatto"><span data-lang="it" class="lang-show">Capriolo in salmì con polenta</span><span data-lang="fr">Chevreuil en salmis avec polenta</span></div>
+    </div>
+    <div class="menu-category">
+      <div class="menu-cat-title"><span data-lang="it" class="lang-show">Dessert</span><span data-lang="fr">Dessert</span></div>
+      <div class="menu-piatto"><span data-lang="it" class="lang-show">Torta nuziale & piccola pasticceria</span><span data-lang="fr">Gâteau de mariage & petits fours</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTY -->
+<section class="party-section" id="party">
+  <div class="party-inner">
+    <div class="section-eyebrow"><span data-lang="it" class="lang-show">Si balla</span><span data-lang="fr">On danse</span></div>
+    <h2 class="section-title">
+      <span data-lang="it" class="lang-show">La <em>festa</em></span>
+      <span data-lang="fr">La <em>fête</em></span>
+    </h2>
+    <div class="ornament">· · ·</div>
+    <p class="party-text">
+      <span data-lang="it" class="lang-show">Dalle 23:00 il salone si trasforma. DJ set con musica anni '80 e hit del momento, open bar fino alle 03:00, photobooth e tanto altro. <br><br><em>Portate scarpe comode.</em></span>
+      <span data-lang="fr">Dès 23h le salon se transforme. DJ set avec musique des années 80 et hits du moment, open bar jusqu'à 3h, photobooth et bien plus. <br><br><em>Apportez des chaussures confortables.</em></span>
+    </p>
+  </div>
+</section>
+
+<!-- GIORNO DOPO -->
+<section id="giorno-dopo">
+  <div class="section-eyebrow"><span data-lang="it" class="lang-show">Domenica</span><span data-lang="fr">Dimanche</span></div>
+  <h2 class="section-title">
+    <span data-lang="it" class="lang-show">Il <em>giorno</em> dopo</span>
+    <span data-lang="fr">Le <em>lendemain</em></span>
+  </h2>
+  <div class="ornament">· · ·</div>
+  <div class="giorno-dopo-photo">
+    <img src="https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?w=800&q=80" alt="Giorno dopo">
+  </div>
+  <div class="giorno-dopo-box">
+    <p class="giorno-dopo-text">
+      <span data-lang="it" class="lang-show">Per chi vorrà fermarsi: brunch dalle 11:00 al ristorante dell'Hotel Bellevue. Sarà l'occasione per salutarci con calma e magari fare una passeggiata insieme verso le cascate di Lillaz.</span>
+      <span data-lang="fr">Pour ceux qui voudront rester : brunch à partir de 11h au restaurant de l'Hôtel Bellevue. Ce sera l'occasion de nous saluer tranquillement et peut-être faire une balade ensemble vers les cascades de Lillaz.</span>
+    </p>
+  </div>
+</section>
+
+<!-- GUESTBOOK -->
+<section class="guestbook-section" id="guestbook">
+  <div class="guestbook-inner">
+    <div class="section-eyebrow"><span data-lang="it" class="lang-show">Lascia un segno</span><span data-lang="fr">Laissez une trace</span></div>
+    <h2 class="section-title">
+      <span data-lang="it" class="lang-show">Il <em>guestbook</em></span>
+      <span data-lang="fr">Le <em>livre d'or</em></span>
+    </h2>
+    <div class="ornament">· · ·</div>
+    <form class="guestbook-form">
+      <div class="form-group">
+        <label class="form-label"><span data-lang="it" class="lang-show">La tua dedica</span><span data-lang="fr">Votre dédicace</span></label>
+        <textarea class="form-textarea" placeholder="..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label"><span data-lang="it" class="lang-show">Firma</span><span data-lang="fr">Signature</span></label>
+        <input type="text" class="form-input" placeholder="Il tuo nome">
+      </div>
+      <button type="submit" class="btn-primary">
+        <span data-lang="it" class="lang-show">Lascia la dedica</span>
+        <span data-lang="fr">Laisser la dédicace</span>
+      </button>
+    </form>
+    <div class="dediche-list">
+      <div class="dedica">
+        <div class="dedica-testo">
+          <span data-lang="it" class="lang-show">«Auguri amici, che la vostra vita insieme sia bella come questa Valle.»</span>
+          <span data-lang="fr">« Félicitations les amis, que votre vie ensemble soit aussi belle que cette Vallée. »</span>
+        </div>
+        <div class="dedica-firma">Luca &amp; Sara</div>
+      </div>
+      <div class="dedica">
+        <div class="dedica-testo">
+          <span data-lang="it" class="lang-show">«Felici di condividere questo giorno speciale con voi. Auguri di cuore!»</span>
+          <span data-lang="fr">« Heureux de partager ce jour spécial avec vous. Félicitations du fond du cœur ! »</span>
+        </div>
+        <div class="dedica-firma">Famiglia Bianchi</div>
+      </div>
+    </div>
+    <div class="playlist-card">
+      <div class="playlist-title">
+        <span data-lang="it" class="lang-show">La playlist della festa</span>
+        <span data-lang="fr">La playlist de la fête</span>
+      </div>
+      <a href="#" class="gift-btn">
+        <span data-lang="it" class="lang-show">♫ Suggerisci un brano</span>
+        <span data-lang="fr">♫ Suggérer un morceau</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOTO LIVE -->
+<section class="foto-section" id="foto">
+  <div class="foto-inner">
+    <div class="section-eyebrow"><span data-lang="it" class="lang-show">Capitolo finale</span><span data-lang="fr">Chapitre final</span></div>
+    <h2 class="section-title">
+      <span data-lang="it" class="lang-show">Le <em>vostre</em> foto</span>
+      <span data-lang="fr">Vos <em>photos</em></span>
+    </h2>
+    <div class="ornament">· · ·</div>
+    <p style="text-align:center;font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;margin-bottom:16px;opacity:0.9;">
+      <span data-lang="it" class="lang-show">I vostri scatti rendono questa giornata indimenticabile. Caricateli qui.</span>
+      <span data-lang="fr">Vos clichés rendent cette journée inoubliable. Téléchargez-les ici.</span>
+    </p>
+    <label class="upload-zone">
+      <input type="file" multiple accept="image/*,video/*" style="display:none">
+      <div class="upload-icon">⬆</div>
+      <div class="upload-text">
+        <span data-lang="it" class="lang-show">Tocca per caricare</span>
+        <span data-lang="fr">Cliquez pour télécharger</span>
+      </div>
+      <div class="upload-hint">
+        <span data-lang="it" class="lang-show">Foto · Video · Tutti i formati</span>
+        <span data-lang="fr">Photos · Vidéos · Tous formats</span>
+      </div>
+    </label>
+    <div class="gallery-preview">
+      <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=300&q=80" alt="Foto 1">
+      <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0e4a6?w=300&q=80" alt="Foto 2">
+      <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=300&q=80" alt="Foto 3">
+      <img src="https://images.unsplash.com/photo-1519741347686-c1e30c4f437b?w=300&q=80" alt="Foto 4">
+      <img src="https://images.unsplash.com/photo-1469371670807-013ccf25f16a?w=300&q=80" alt="Foto 5">
+      <img src="https://images.unsplash.com/photo-1546032996-6dfacbacbf3f?w=300&q=80" alt="Foto 6">
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-ornament">· · · ✦ · · ·</div>
+  <div class="footer-names">Marco &amp; Chiara</div>
+  <div class="footer-date">12 · 07 · 2026 · Aymavilles</div>
+  <div class="footer-diswood">
+    <span data-lang="it" class="lang-show">Esperienza creata con</span>
+    <span data-lang="fr">Expérience créée avec</span>
+    &nbsp;<a href="https://diswood.it" target="_blank">DisWood</a>
+  </div>
+</footer>
+
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+  
+  const menuToggle = document.getElementById('menu-toggle');
+  const navLinks = document.getElementById('nav-links');
+  const menuOverlay = document.getElementById('menu-overlay');
+  function toggleMenu(open) {
+    navLinks.classList.toggle('open', open);
+    menuOverlay.classList.toggle('show', open);
+  }
+  menuToggle.addEventListener('click', () => toggleMenu(!navLinks.classList.contains('open')));
+  menuOverlay.addEventListener('click', () => toggleMenu(false));
+  document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => toggleMenu(false));
+  });
+  
+  document.querySelectorAll('.lang-toggle button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const lang = btn.dataset.switch;
+      document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll(`.lang-toggle button[data-switch="${lang}"]`).forEach(b => b.classList.add('active'));
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.classList.toggle('lang-show', el.dataset.lang === lang);
+      });
+      document.documentElement.lang = lang;
+    });
+  });
+  
+  const eventDate = new Date('2026-07-12T15:30:00').getTime();
+  function updateCountdown() {
+    const now = Date.now();
+    const diff = eventDate - now;
+    if (diff <= 0) {
+      ['cd-days','cd-hours','cd-mins','cd-secs'].forEach(id => document.getElementById(id).textContent = '0');
+      return;
+    }
+    document.getElementById('cd-days').textContent = Math.floor(diff / 86400000);
+    document.getElementById('cd-hours').textContent = Math.floor((diff / 3600000) % 24);
+    document.getElementById('cd-mins').textContent = Math.floor((diff / 60000) % 60);
+    document.getElementById('cd-secs').textContent = Math.floor((diff / 1000) % 60);
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+  
+  function copyIban() {
+    const iban = document.getElementById('iban-num').textContent.replace(/\s/g, '');
+    navigator.clipboard.writeText(iban).then(() => {
+      const btn = event.target;
+      const original = btn.innerHTML;
+      btn.innerHTML = '✓ ' + (document.documentElement.lang === 'fr' ? 'Copié' : 'Copiato');
+      setTimeout(() => btn.innerHTML = original, 2000);
+    });
+  }
+  
+  const tableauData = {
+    'rossi': 'Tavolo Ulivo',
+    'bertin': 'Tavolo Larice',
+    'bianchi': 'Tavolo Cervino',
+    'verdi': 'Tavolo Grivola',
+    'neri': 'Tavolo Bianco'
+  };
+  function searchTableau() {
+    const q = document.getElementById('tableau-input').value.trim().toLowerCase();
+    const result = document.getElementById('tableau-result');
+    const tavolo = document.getElementById('tableau-tavolo');
+    if (q.length < 2) { result.classList.remove('show'); return; }
+    const found = Object.keys(tableauData).find(k => k.includes(q));
+    if (found) {
+      tavolo.textContent = tableauData[found];
+      result.classList.add('show');
+    } else {
+      tavolo.textContent = document.documentElement.lang === 'fr' ? 'Non trouvé' : 'Non trovato';
+      result.classList.add('show');
+    }
+  }
+  
+  document.getElementById('rsvp-form').addEventListener('submit', e => {
+    e.preventDefault();
+    alert(document.documentElement.lang === 'fr' 
+      ? 'Merci ! Votre confirmation a été envoyée à Marco & Chiara.' 
+      : 'Grazie! La tua conferma è stata inviata a Marco & Chiara.');
+  });
+</script>
+
+</body>
+</html>
